@@ -22,7 +22,7 @@ try {
      * - sql list of areas
      */
     
-    if (!defined('DS')) {
+    if (! defined('DS')) {
         define('DS', DIRECTORY_SEPARATOR);
     }
     include_once dirname(__DIR__) . DS . 'administrator' . DS . 'components' . DS . 'com_geolive' . DS . 'core.php';
@@ -38,11 +38,6 @@ try {
         return $region->section;
     }, AttributesField::GetDefinedList(AttributesField::GetMetadata('section', $tableMetadata)));
     // $regions = AttributesField::GetDefinedList(AttributesField::GetMetadata('paddlingArea', $tableMetadata));
-    
-    print_r(array(
-        $sections,
-        $regions
-    ));
     
     if (class_exists('JFactory')) {
         
@@ -63,7 +58,7 @@ try {
     $paArray = $_POST['paddlingAreas'];
     $fileName = "";
     $sitesArray = array();
-    if (!empty($paArray)) {
+    if (! empty($paArray)) {
         $paWhere = '';
         foreach ($paArray as $pa) {
             $fileName .= $pa;
@@ -76,73 +71,53 @@ try {
         }
     }
     $fileName = "paddling_areas_" . hash('crc32b', $fileName);
-    /*
-     * $res = $mysqli->query("SELECT distinct(section) $from order by a.section");
-     * $rgArray = array();
-     *
-     * if (empty($res))
-     * return;
-     *
-     * while ($row = $res->fetch_assoc()) {
-     * $region = trim($row['section']);
-     * if ($region == '') {
-     * continue;
-     * }
-     * // compare region to everything in the region array and if there is a match skip it
-     * $alreadyHave = false;
-     * foreach ($rgArray as $rgn) {
-     * if ($region == $rgn) {
-     * $alreadyHave = true;
-     * break;
-     * }
-     * }
-     * if (!$alreadyHave) {
-     * $rgArray[] = $region;
-     * }
-     * }
-     */
+    
     $regionObjArray = array();
+    
+    $readAccessFilter = array(
+        'readAccess' => array(
+            'comparator' => 'IN',
+            'value' => '(\'' . implode('\', \'', Core::Client()->getAccessGroups()) . '\')',
+            'qoutes' => false
+        )
+    );
+    $layers = MapController::GetAllLayers($readAccessFilter);
+    
+    // TODO: could add checkboxes to select items from layers as well
     
     $query = 'Select DISTINCT a.paddlingArea as area FROM ( SELECT * FROM ' . $table . ' ) as m, ' . AttributesFilter::JoinAttributeFilterObject(
         json_decode(
             '{
                     "join":"join","table":"siteData","set":"*","filters":[
-                        {"field":"section","comparator":"equalTo","value":"' . '[[REGION]]' . '", "table":"siteData"}
-                    ]
-                }'), 'm.id', 'm.type');
+                        {"field":"section","comparator":"equalTo","value":"' .
+                 '[[REGION]]' . '", "table":"siteData"}
+                    ],"show":"paddlingArea"
+                }'), 'm.id', 'm.type') . ' AND m.lid IN (' . implode(
+        ', ', array_map(function ($layer) {
+            return $layer->getId();
+        }, $layers)) . ') ORDER BY a.paddlingArea';
+    
+    echo ($query) . "<br/><br/><br/>";
+    
+    // die($query);
     
     foreach ($rgArray as $region) {
         
-        $db->iterate(str_replace('[[REGION]]', $region, $query), 
-            function ($result) {
-                
-                print_r($result);
+        $regionObj = new Region($region);
+        $areas = array();
+        $db->iterate($q = str_replace('[[REGION]]', $region, $query), 
+            
+            function ($result) use(&$areas) {
+                $areas[] = ucwords(trim($result->area));
             });
         
-        $regionObj = new Region($region);
-        // get a distinct list of paddling areas to populate the paddling area drop-down
-        $res = $mysqli->query(
-            "SELECT distinct(paddlingArea) $from AND a.section like '%$region%' order by a.paddlingArea");
         $paArray = array();
-        while ($row = $res->fetch_assoc()) {
-            $pdArea = trim($row['paddlingArea']);
-            if ($pdArea == '') {
-                continue;
-            }
-            // compare paddling area to everything in the paddling area array and if there is a match skip it
-            $alreadyHave = false;
-            foreach ($paArray as $pda) {
-                if ($pdArea == $pda) {
-                    $alreadyHave = true;
-                    break;
-                }
-            }
-            if (!$alreadyHave) {
-                $paArray[] = $pdArea;
-                $paddleObj = new PaddlingArea($pdArea);
-                $regionObj->areas[] = $paddleObj; // add the new paddling area to the region's list of paddling areas
-            }
+        foreach (array_unique($areas) as $pdArea) {
+            $paArray[] = $pdArea;
+            $paddleObj = new PaddlingArea($pdArea);
+            $regionObj->areas[] = $paddleObj; // add the new paddling area to the region's list of paddling areas
         }
+        
         $regionObjArray[] = $regionObj;
     }
     $paddlingJson = json_encode($regionObjArray, JSON_PRETTY_PRINT);
