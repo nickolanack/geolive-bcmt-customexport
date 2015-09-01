@@ -11,9 +11,11 @@
  * seperated html template from code here. (uses Scaffolds)
  *
  * TODO:
+ *
  *  - iterate-print kml and gpx output this will use alot less memory and will send to client sooner although it is relatively quick
  *  - use attribute filter instead of sql query to get items - this returns results that might get missed trimmed/case-insensitive
- *    and also uses client auth groups (so changes to readAccess are not a problem)
+ *    and also uses client auth groups (so changes to readAccess are not a problem) and no need to sql escape things becuase it uses
+ *    it's own syntax
  *  - provide ajax list which will print items and allow specific site selections for output
  *
  *
