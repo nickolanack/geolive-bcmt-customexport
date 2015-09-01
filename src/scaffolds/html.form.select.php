@@ -1,11 +1,12 @@
 <?php
 $config = array_merge(array(
-    'regionObjArray'
+    'regionObjArray' => array(),
+    'url' => ''
 ), $params);
 
 ?>
-<script type="text/javascript" src="../js/siteSearch.js">
-</script>
+<script src="ext/js/siteSearch.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 window.addEventListener("load", function(){
 	PaddlingRegionSearchBehavior(
@@ -25,9 +26,11 @@ window.addEventListener("load", function(){
 
 <a name="bcmtFormAnchor"></a>
 <h3>Search for site by Region and Paddling Area</h3>
-<form name="bcmtForm" method="POST"
-	action="sites-by-region-and-paddling-area#bcmtFormAnchor">
-	<img id="regionImage" src="../images/stories/sixregions.jpg"
+<form id="exportForm" name="bcmtForm" method="POST"
+	action="<?php echo $config['url'] ?>" target="_blank">
+	<input type="hidden" name="task" value="export" /> <input
+		id="exportOutput" type="hidden" name="exportOutput" value="" /> <img
+		id="regionImage" src="../images/stories/sixregions.jpg"
 		alt="Six Regions" width="300px" style="float: left">
 	<table style="margin-left: 330px">
 		<tr>
@@ -60,9 +63,14 @@ echo implode(
 		</tr>
 		<tr>
 			<td>&nbsp;&nbsp;&nbsp;</td>
-			<td id="paSubmit" style="visibility: hidden"><input type="submit"
-				value="Generate files" class="btn btn-primary"></td>
+			<td id="paSubmit" style="visibility: hidden"><a id="exportToKml"
+				class="btn btn-success" style="margin-right: 30px" data-out="kml"
+				onclick="return false;">Download results to Google Earth</a><a
+				id="exportToGpx" class="btn btn-success"
+				style="margin: 10px; margin-left: 0;" data-out="gpx"
+				onclick="return false;">Download results for your GPS</a></td>
 		</tr>
 	</table>
 	<br />
 </form>
+

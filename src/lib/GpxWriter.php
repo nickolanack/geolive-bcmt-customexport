@@ -3,12 +3,9 @@
 class GpxWriter {
     private $dom;
     private $docNode;
-    private $outDir;
 
     function __construct() {
 
-        $this->outDir = Util::getOutputDir();
-        
         $this->dom = new DOMDocument('1.0', 'UTF-8');
         $node = $this->dom->createElementNS('http://www.topografix.com/GPX/1/1', 'gpx');
         $this->docNode = $this->dom->appendChild($node);
@@ -37,11 +34,8 @@ class GpxWriter {
         $timeNode = $metaNode->appendChild($node);
     }
 
-    function writeGpx($gpxFile, $sitesArray) {
+    function writeGpx($sitesArray) {
 
-        $gpxRef = 'gpx/' . $gpxFile . '.gpx';
-        $gpxFile = $this->outDir . $gpxRef;
-        
         foreach ($sitesArray as $site) {
             $coordArray = Util::parseCoords($site['coordinates']);
             
@@ -75,11 +69,7 @@ class GpxWriter {
             // $wptTypeNode = $waypointNode->appendChild($typeNode);
         }
         
-        $gpxOutput = $this->dom->saveXML();
-        $gpxFileLink = fopen($gpxFile, 'w+') or die("Can't open GPX file");
-        fwrite($gpxFileLink, $gpxOutput);
-        fclose($gpxFileLink);
-        return $gpxRef;
+        return $this->dom->saveXML();
     }
 }
 

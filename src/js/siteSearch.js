@@ -10,11 +10,22 @@ function PaddlingRegionSearchBehavior(regions, config){
 	var paChs=document.getElementById(config.areaChoices);
 	var paInstr=document.getElementById(config.paInstr);
 	var paSubmit=document.getElementById(config.paSubmit);
-	
+	var exportOutput=document.getElementById('exportOutput');
+	var form=document.getElementById('exportForm');
 
 	selobj.addEventListener("change",function(){
 		listPaddlingAreas(selobj.value);
 	});
+	
+	
+	Array.prototype.slice.call( paSubmit.childNodes, 0).forEach(function(button){
+		button.addEventListener('click',function(){
+			exportOutput.value=button.getAttribute('data-out');
+			form.submit();
+		})
+	
+	});
+	
 
 	function listPaddlingAreas(forRegion)
 	{
@@ -48,19 +59,24 @@ function PaddlingRegionSearchBehavior(regions, config){
 			paSubmit.style.visibility="visible";
 		}
 
-		addSelectedAreasValidator(Array.prototype.slice.call( document.getElementsByClassName("ckbxarea") , 0 ));
+		addSelectedAreasValidator(
+				Array.prototype.slice.call( document.getElementsByClassName("ckbxarea") , 0),
+				Array.prototype.slice.call( paSubmit.childNodes, 0)
+			);
 
 
 	}
 	
 	
-	function addSelectedAreasValidator(checkboxes){
+	function addSelectedAreasValidator(checkboxes, buttons){
 		
 		var checked=0;
 		
-		var submit=paSubmit.firstChild;
-		submit.disabled=true;
-		submit.className='btn';
+		buttons.forEach(function(submit){
+			submit.setAttribute('disabled',true);
+			submit.className='btn';
+		});
+		
 
 		checkboxes.forEach(function(chbx){
 			chbx.addEventListener("click", function(){
@@ -71,11 +87,15 @@ function PaddlingRegionSearchBehavior(regions, config){
 				}
 				
 				if(checked>0){
-					submit.disabled=null;
-					submit.className='btn btn-primary';
+					buttons.forEach(function(submit){
+						submit.removeAttribute('disabled');
+						submit.className='btn btn-primary';
+					});
 				}else{
-					submit.disabled=true;
-					submit.className='btn';
+					buttons.forEach(function(submit){
+						submit.setAttribute('disabled',true);
+						submit.className='btn';
+					}); 
 				}
 				
 			});
