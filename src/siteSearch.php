@@ -2,11 +2,9 @@
 <?php
 try {
     
-    include_once ('KmlWriter.php');
-    include_once ('GpxWriter.php');
-    include_once ('Util.php');
-    include_once ('PaddlingArea.php');
-    include_once ('Region.php');
+    include_once ('lib/Util.php');
+    include_once ('lib/PaddlingArea.php');
+    include_once ('lib/Region.php');
     
     error_reporting(E_ALL ^ E_NOTICE); // report everything except notices
     ini_set('display_errors', 0);
@@ -22,7 +20,7 @@ try {
      * - sql list of areas
      */
     
-    if (! defined('DS')) {
+    if (!defined('DS')) {
         define('DS', DIRECTORY_SEPARATOR);
     }
     include_once dirname(__DIR__) . DS . 'administrator' . DS . 'components' . DS . 'com_geolive' . DS . 'core.php';
@@ -58,7 +56,7 @@ try {
     $paArray = $_POST['paddlingAreas'];
     $fileName = "";
     $sitesArray = array();
-    if (! empty($paArray)) {
+    if (!empty($paArray)) {
         $paWhere = '';
         foreach ($paArray as $pa) {
             $fileName .= $pa;
@@ -89,8 +87,7 @@ try {
         json_decode(
             '{
                     "join":"join","table":"siteData","set":"*","filters":[
-                        {"field":"section","comparator":"equalTo","value":"' .
-                 '[[REGION]]' . '", "table":"siteData"}
+                        {"field":"section","comparator":"equalTo","value":"' . '[[REGION]]' . '", "table":"siteData"}
                     ],"show":"paddlingArea"
                 }'), 'm.id', 'm.type') . ' AND m.lid IN (' . implode(
         ', ', array_map(function ($layer) {
@@ -120,97 +117,48 @@ try {
         
         $regionObjArray[] = $regionObj;
     }
-    $paddlingJson = json_encode($regionObjArray, JSON_PRETTY_PRINT);
     
     ?>
-<a name="bcmtFormAnchor"></a>
-<h3>Search for site by Region and Paddling Area</h3>
 
-<script src="../ext/js/siteSearch.js"></script>
 
-<script>
-    window.addEventListener("load", function(){
-    	PaddlingRegionSearchBehavior(<?php echo $paddlingJson ?>, {
 
-    		rgSelect:"rgSelect",
-    		regionImage:"regionImage",
-    	    areaChoices:"areaChoices",
-    	    paInstr:"paInstr",
-    	    paSubmit:"paSubmit",
 
-        });
-    });
-</script>
 
 <?php
     if (empty($sitesArray)) {
-        ?>
-<form name="bcmtForm" method="POST"
-	action="sites-by-region-and-paddling-area#bcmtFormAnchor">
-	<input type="hidden" name="prevRegion"
-		value="<?php echo $currRegion ?>"> <img id="regionImage"
-		src="../images/stories/sixregions.jpg" alt="Six Regions" width="300px"
-		style="float: left">
-	<table style="margin-left: 330px">
-		<tr>
-			<td>Region:</td>
-			<td><select id="rgSelect" name="rgSelect" class="btn btn-success"
-				style="height: 30px;">
-					<option>choose a region</option>
-			<?php
         
-        echo implode(
-            array_map(
-                function ($region) {
-                    $name = $region->rgName;
-                    return '<option value="' . $name . '">' . $name . '</option>';
-                }, $regionObjArray));
-        
-        ?>
-			</select></td>
-		</tr>
-		<tr>
-			<td id="paInstr" style="visibility: hidden" colspan=2>Choose the
-				paddling areas you wish to view in either Google Earth or your GPS:</td>
-		</tr>
-		<tr>
-			<td>&nbsp;&nbsp;&nbsp;</td>
-			<td id="areaChoices" style="vertical-align: top"></td>
-		</tr>
-		<tr>
-			<td colspan="2">&nbsp;&nbsp;&nbsp;</td>
-		</tr>
-		<tr>
-			<td>&nbsp;&nbsp;&nbsp;</td>
-			<td id="paSubmit" style="visibility: hidden"><input type="submit"
-				value="Generate files" class="btn btn-primary"></td>
-		</tr>
-	</table>
-	<br>
-<?php
+        HtmlBlock('form.select', array(
+            'regionObjArray' => $regionObjArray
+        ), __DIR__ . DS . 'scaffolds');
     } else {
+        
+        include_once ('lib/KmlWriter.php');
+        include_once ('lib/GpxWriter.php');
+        
         $kmlWriter = new KmlWriter();
         $gpxWriter = new GpxWriter();
-        $kmlFileRef = $kmlWriter->writeKml($fileName, $sitesArray);
-        $gpxFileRef = $gpxWriter->writeGpx($fileName, $sitesArray);
+        
         ?>
-	<p>
-	
-	
-	<form name="bcmtForm" method="POST"
-		action="map/current-sites-on-bc-marine-trails-map-table#bcmtFormAnchor">
-		<a class="btn btn-success" style="margin-right: 30px"
-			href="<?php echo $kmlFileRef ?>">Download results to Google Earth</a>
-		<a class="btn btn-success" style="margin-right: 30px"
-			href="<?php echo $gpxFileRef ?>">Download results for your GPS</a> <input
-			class="btn btn-primary" type="submit" value="New search">
-	</form>
-	</p>
+
+
+	<?php
+        
+        HtmlBlock('form.export', 
+            array(
+                'kmlFile' => $kmlWriter->writeKml($fileName, $sitesArray),
+                'gpxFile' => $gpxWriter->writeGpx($fileName, $sitesArray)
+            ), __DIR__ . DS . 'scaffolds');
+        
+        ?>
+
+
+
+
 <?php
     }
     
     ?>
-</form>
+
 
 <?php
 } catch (Exception $e) {
