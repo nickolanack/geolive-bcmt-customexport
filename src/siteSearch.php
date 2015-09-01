@@ -2,8 +2,18 @@
 
 /**
  * Major changes to export function:
- * export is now done on selection buttons (kml or gpx) which opens the url to this file in a new tab
- * no need for 'new search', as it is updateable at all times
+ * export is now done on selection buttons (kml or gpx) which opens the url to this file in a new tab.
+ * no need for 'new search', as it is updateable at all times (no need for generate files either).
+ * use core framework from geolive which provides access to database, (outside of Joomla too, so the script can run directly).
+ * no need to maintain production and develpment site settings geolive detects this.
+ * GeoliveHelper class contains static methods mostly for interacting with the database
+ * no need to write output files to disk since this script can provide ajax like methods when accessed directly
+ * seperated html template from code here. (uses Scaffolds)
+ *
+ * TODO:
+ * iterate-print kml and gpx output this will use alot less memory and will send to client sooner although it is relatively quick
+ * use attribute filter instead of sql query to get items - this returns results that might get missed trimmed/case-insensitive
+ *
  */
 try {
     
