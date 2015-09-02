@@ -20,8 +20,16 @@ function PaddlingRegionSearchBehavior(regions, config){
 	
 	Array.prototype.slice.call( paSubmit.childNodes, 0).forEach(function(button){
 		button.addEventListener('click',function(){
-			exportOutput.value=button.getAttribute('data-out');
-			form.submit();
+			var out=button.getAttribute('data-out');
+			if(out==='preview'){
+				
+				
+				
+			}else{
+				exportOutput.value=out
+				form.submit();
+			}
+			
 		})
 	
 	});

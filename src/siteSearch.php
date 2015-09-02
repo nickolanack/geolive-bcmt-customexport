@@ -17,9 +17,6 @@
  *    and also uses client auth groups (so changes to readAccess are not a problem) and no need to sql escape things becuase it uses
  *    it's own syntax
  *  - provide ajax list which will print items and allow specific site selections for output
- *
- *
- *
  */
 try {
     
@@ -34,7 +31,8 @@ try {
     if (GeoliveHelper::ScriptWasAccessedDirectlyFromCommandLine()) {
         
         // GeoliveHelper::LoadGeoliveFromCommandLine();
-        // echo 'Hello World - Terminal Command List: [ -empty- ]';
+        // could run this script from command line. or could
+        // implement asynrounous functions using shell_exec('php '.__FILE__.' ')
     } elseif (GeoliveHelper::ScriptWasAccessedDirectlyFromUrl()) {
         
         /**
@@ -56,6 +54,7 @@ try {
                     });
                 
                 if (UrlVar('exportOutput') == 'kml') {
+                    
                     header('Content-Type: application/kml+xml;');
                     header('Content-disposition: filename="export.kml"');
                     include_once ('lib/KmlWriter.php');

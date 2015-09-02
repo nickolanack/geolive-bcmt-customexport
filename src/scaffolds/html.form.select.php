@@ -68,7 +68,10 @@ echo implode(
 				onclick="return false;">Download results to Google Earth</a><a
 				id="exportToGpx" class="btn btn-success"
 				style="margin: 10px; margin-left: 0;" data-out="gpx"
-				onclick="return false;">Download results for your GPS</a></td>
+				onclick="return false;">Download results for your GPS</a> <a
+				id="exportToGpx" class="btn btn-primary"
+				style="margin: 10px; margin-left: 0;" data-out="preview"
+				onclick="return false;">Preview Sites</a></td>
 		</tr>
 	</table>
 	<br />
