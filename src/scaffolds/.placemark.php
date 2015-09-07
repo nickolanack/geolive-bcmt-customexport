@@ -1,4 +1,13 @@
 <?php
+
+/*
+ * Dont use this as a scaffold. just use the code in the callback for
+ * Scaffold('kml', array('callback'=>function(){
+ *
+ * ...here...
+ *
+ * }));
+ */
 $config = array_merge(
     array(
         'coordinates' => array(

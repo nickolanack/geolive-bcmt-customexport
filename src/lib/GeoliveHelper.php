@@ -21,17 +21,21 @@ class GeoliveHelper {
             self::$isLoaded = true;
         }
         
+        $file = dirname(__DIR__) . DS . 'siteSearch.php';
+        
         if (key_exists('TERM', $_SERVER)) {
             self::$isTerm = true;
-            if (isset($argv) && realpath($argv[0]) === __FILE__) {
+            if (isset($argv) && realpath($argv[0]) === $file) {
                 self::$isDirect = true;
             }
         } else {
             self::$isUrl = true;
-            if (Core::HTML()->getScriptName() == basename(__FILE__)) {
+            if (Core::HTML()->getScriptName() == basename($file)) {
                 self::$isDirect = true;
             }
         }
+        
+        Core::HTML()->setThrowsResouceInclusionError('Document header has already been printed');
     }
 
     public static function ScriptWasAccessedDirectlyFromUrl() {
@@ -154,9 +158,13 @@ class GeoliveHelper {
                     ],"show":"paddlingArea"
                 }'), 'm.id', 'm.type') . ' AND m.lid IN (' . implode(
                 ', ', 
-                array_map(function ($layer) {
-                    return $layer->getId();
-                }, self::VisibleLayers())) . ') ORDER BY a.paddlingArea';
+                array_map(
+                    function ($layer) {
+                        if (!method_exists($layer, 'getId')) {
+                            throw new Exception(print_r($layer, true));
+                        }
+                        return $layer->getId();
+                    }, self::VisibleLayers())) . ') ORDER BY a.paddlingArea';
             
             self::$queryWithRegionReplacement = $query;
         }
@@ -174,7 +182,8 @@ class GeoliveHelper {
     }
 
     /**
-     * I was going to intersect all results with region as well, but I think all that is neccessary is to union
+     * I was going to intersect all results with region as well, but I think that is unneccessary.
+     * just union
      * all sites with paddling area.
      *
      * @param unknown $areas            
@@ -183,19 +192,23 @@ class GeoliveHelper {
      */
     public static function FilteredSiteListInAreas($areas, $iteratorCallback) {
 
-        $query = 'Select DISTINCT a.paddlingArea as area FROM ( SELECT * FROM ' . $table . ' ) as m, ' . AttributesFilter::JoinAttributeFilterObject(
-            json_decode(
-                '{
-                    "join":"join","table":"siteData","set":"*","filters":[' . array_map(
+        $filter = json_decode(
+            '{
+                    "join":"join","table":"siteData","set":"*","filters":[' . implode(', ', 
+                array_map(
                     function ($area) {
                         return '{"field":"paddlingArea","comparator":"equalTo","value":"' . $area .
                              '", "table":"siteData"}';
-                    }, $areas) . '
+                    }, $areas)) . '
 
 
-                    ],"show":"*"
-                }'), 'm.id', 'm.type') . ' AND m.lid IN (' . implode(
-            ', ', 
+                    ]
+                }');
+        
+        // print_r($filter);
+        
+        $query = 'Select m.id as id, m.name as name FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() . ' ) as m, ' . AttributesFilter::JoinAttributeFilterObject(
+            $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ', 
             array_map(function ($layer) {
                 return $layer->getId();
             }, self::VisibleLayers())) . ') ORDER BY a.paddlingArea';
@@ -218,3 +231,5 @@ class GeoliveHelper {
         self::Database()->iterate($query, $iteratorCallback);
     }
 }
+
+GeoliveHelper::LoadCoreLibs();

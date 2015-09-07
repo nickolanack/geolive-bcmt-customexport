@@ -1,24 +1,31 @@
 <?php
 $config = array_merge(array(
-    'regionObjArray' => array(),
+    'regions' => array(),
     'url' => ''
 ), $params);
 
+// echo (Core::HTML()->isCaching() ? 'caching' : 'no-caching') . "<br/>";
+// echo (Core::HTML()->isBuffered() ? 'buffering' : 'no-buffering (joomla buffered maybe)') . "<br/>";
+// echo (Core::HTML()->isRaw() ? 'raw text' : 'document') . "<br/>";
+
+// Behavior('ajax');
+
 ?>
+<script
+	src="<?php echo UrlFrom(Core::AdminDir().'/js/Ajax/AjaxControlQuery.js'); ?>"
+	type="text/javascript"></script>
 <script src="ext/js/siteSearch.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 window.addEventListener("load", function(){
 	PaddlingRegionSearchBehavior(
- <?php echo json_encode($config['regionObjArray'], JSON_PRETTY_PRINT); ?>, {
-
-		rgSelect:"rgSelect",
-		regionImage:"regionImage",
-	    areaChoices:"areaChoices",
-	    paInstr:"paInstr",
-	    paSubmit:"paSubmit"
-
-    });
+ <?php echo json_encode($config['regions'], JSON_PRETTY_PRINT); ?>, <?php echo json_encode($config['layers'], JSON_PRETTY_PRINT); ?>, (new Class({
+	    Extends:AjaxControlQuery,
+	    initialize:function(task, json){
+	        var me=this;
+	        me.parent(<?php echo json_encode($config['url']);?>, task, json);
+		}
+ })));
   });
 
 </script>
@@ -45,7 +52,7 @@ echo implode(
         function ($region) {
             $name = $region->rgName;
             return '<option value="' . $name . '">' . $name . '</option>';
-        }, $config['regionObjArray']));
+        }, $config['regions']));
 
 ?>
 			</select></td>
@@ -68,7 +75,7 @@ echo implode(
 				onclick="return false;">Download results to Google Earth</a><a
 				id="exportToGpx" class="btn btn-success"
 				style="margin: 10px; margin-left: 0;" data-out="gpx"
-				onclick="return false;">Download results for your GPS</a> <a
+				onclick="return false;">Download results for your GPS</a><a
 				id="exportToGpx" class="btn btn-primary"
 				style="margin: 10px; margin-left: 0;" data-out="preview"
 				onclick="return false;">Preview Sites</a></td>
@@ -76,4 +83,5 @@ echo implode(
 	</table>
 	<br />
 </form>
+<div id="site_preview"></div>
 

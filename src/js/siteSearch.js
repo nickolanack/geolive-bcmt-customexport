@@ -1,28 +1,28 @@
 
 
-function PaddlingRegionSearchBehavior(regions, config){
+function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
 	
 
-	
 
-	var selobj=document.getElementById(config.rgSelect);
-	var rgImg=document.getElementById(config.regionImage);
-	var paChs=document.getElementById(config.areaChoices);
-	var paInstr=document.getElementById(config.paInstr);
-	var paSubmit=document.getElementById(config.paSubmit);
+	var selobj=document.getElementById('rgSelect');
+	var rgImg=document.getElementById('regionImage');
+	var paChs=document.getElementById('areaChoices');
+	var paInstr=document.getElementById('paInstr');
+	var paSubmit=document.getElementById('paSubmit');
 	var exportOutput=document.getElementById('exportOutput');
 	var form=document.getElementById('exportForm');
+	
+	var sitePreviewArea=document.getElementById('site_preview');
 
-	selobj.addEventListener("change",function(){
-		listPaddlingAreas(selobj.value);
-	});
+	selobj.addEventListener("change",displayPaddlingAreas);
 	
 	
-	Array.prototype.slice.call( paSubmit.childNodes, 0).forEach(function(button){
+	getSubmitButtons().forEach(function(button){
 		button.addEventListener('click',function(){
 			var out=button.getAttribute('data-out');
 			if(out==='preview'){
 				
+				displaySelectedSites();
 				
 				
 			}else{
@@ -30,23 +30,78 @@ function PaddlingRegionSearchBehavior(regions, config){
 				form.submit();
 			}
 			
-		})
+		});
 	
 	});
 	
+	
+	function getSubmitButtons(){
+		return Array.prototype.slice.call(paSubmit.childNodes, 0);
+	}
+	function getCheckboxes(){
+		return Array.prototype.slice.call(document.getElementsByClassName("ckbxarea"), 0);
+	}
+	
+	function displaySelectedSites(){
+		
+		var json={paddlingAreas:[], layers:[], region:selobj.value};
+		
+		getCheckboxes().forEach(function(cbx){
+			
+			if(cbx.checked){
+				json.paddlingAreas.push(cbx.value);
+			}
+			
+		});
+		
+		if(json.layers.length==0){
+			json.layers="*";
+		}
+		if(json.paddlingAreas.length==0){
+			json.paddlingAreas="*";
+		}
+		
+		(new JsonQuery('list_sites', json)).addEvent('success',function(result){
+			sitePreviewArea.innerHTML='';
+			if(result.success){
+				
+				var sitesWithoutHtml=[];
+				result.sites.forEach(function(site){
+					
+					if(site.html){
+						var siteArticle=new Element('div');
+						siteArticle.innerHTML=site.html;
+						sitePreviewArea.appendChild(siteArticle);
+					}else{
+						sitesWithoutHtml.push(site.id);
+					}
+					
+					
+					if(count(sitesWithoutHtml)){
+						
+					}
+					
+				});
+			}
+			
+		}).execute();
+		
+		
+		
+	}
 
-	function listPaddlingAreas(forRegion)
+	function displayPaddlingAreas()
 	{
 		
-		
-		
-		var selectedRegion = forRegion;
+
+		var selectedRegion = selobj.value;
 		var areaChoicesHtml = "";
+		var mapPrefix = '../images/stories/';
 		for(var i in regions) {
 			if (regions[i].rgName == selectedRegion)
 			{
 				var areas = regions[i].areas;
-				var mapPrefix = '../images/stories/';
+				
 				rgImg.src=mapPrefix + regions[i].image;
 				rgImg.alt=regions[i].rgName + " picture";
 				for(var j in areas) {
@@ -62,49 +117,49 @@ function PaddlingRegionSearchBehavior(regions, config){
 		if(selectedRegion == 'choose a region') {
 			paInstr.style.visibility="hidden";
 			paSubmit.style.visibility="hidden";
+			rgImg.src=mapPrefix + 'sixregions.jpg';
 		} else {
 			paInstr.style.visibility="visible";
 			paSubmit.style.visibility="visible";
 		}
 
-		addSelectedAreasValidator(
-				Array.prototype.slice.call( document.getElementsByClassName("ckbxarea") , 0),
-				Array.prototype.slice.call( paSubmit.childNodes, 0)
-			);
+		addSelectedAreasSubmitValidator();
 
 
 	}
 	
 	
-	function addSelectedAreasValidator(checkboxes, buttons){
+	/**
+	 * 
+	 */
+	function addSelectedAreasSubmitValidator(){
+		
+		var checkboxes=getCheckboxes();
+		var buttons=getSubmitButtons();
 		
 		var checked=0;
 		
-		buttons.forEach(function(submit){
-			submit.setAttribute('disabled',true);
-			submit.className='btn';
+		buttons.forEach(function(btn){
+			btn.setAttribute('disabled',true);
+			btn.className='btn';
 		});
 		
 
-		checkboxes.forEach(function(chbx){
-			chbx.addEventListener("click", function(){
-				if(chbx.checked){
+		checkboxes.forEach(function(cbx){
+			cbx.addEventListener("click", function(){
+				if(cbx.checked){
 					checked++;
 				}else{
 					checked--;
 				}
 				
 				if(checked>0){
-					buttons.forEach(function(submit){
-						submit.removeAttribute('disabled');
-						submit.className='btn btn-primary';
-					});
+					enableSubmitButtons();
 				}else{
-					buttons.forEach(function(submit){
-						submit.setAttribute('disabled',true);
-						submit.className='btn';
-					}); 
+					disableSubmitButtons();
 				}
+				
+											
 				
 			});
 		});
@@ -112,44 +167,28 @@ function PaddlingRegionSearchBehavior(regions, config){
 		
 	}
 	
-	
-	
-	
-	
-	
-	/*
-	
-	
-	
-	// the following function is never used.
-	// jQuery selectors in this function only work if you pass in the DOM reference.  No method of appending to the select element worked.
-	function loadPaddlingAreas(rgSel,paSel,paOpts,rgImg)
-	{
-		var $jq = jQuery.noConflict(); // this is to get around 'is not a function' errors that get thrown due to conflict with MooTools.
-		var selectedRegion = rgSel.value;
-		var selectedArea = paSel.value
-		$jq(paSel).empty();
-		var opt = document.createElement("option");
-		opt.text = 'choose a paddling area';
-		paOpts.add(opt);
-		for(var i in regions) {
-			if (regions[i].rgName == selectedRegion)
-			{
-				var areas = regions[i].areas;
-				var mapPrefix = '../images/stories/';
-				$jq(rgImg).attr('src',mapPrefix + regions[i].image);
-				$jq(rgImg).attr('alt',regions[i].rgName + " picture");
-				for(var j in areas) {
-					if (typeof areas[j].paName !== "undefined") {
-						var opt = document.createElement("option");
-						opt.text = areas[j].paName;
-						paOpts.add(opt);
-					}
-				}
+	function enableSubmitButtons(){
+		
+		getSubmitButtons().forEach(function(btn){
+			
+			btn.removeAttribute('disabled');
+			if(btn.getAttribute('data-out')==='preview'){			
+				btn.className='btn btn-primary';	
+			}else{	
+				btn.className='btn btn-success';
 			}
-		}
-	}
 
- */
+		});
+
+	}
+	
+	function disableSubmitButtons(){
+		getSubmitButtons().forEach(function(btn){
+			btn.setAttribute('disabled',true);
+			btn.className='btn';
+		}); 
+
+	}
+	
 	
 }
