@@ -117,6 +117,15 @@ class GeoliveHelper {
 
         return Core::LoadPlugin('Attributes')->getDatabase()->decodeTableName(AttributesTable::GetMetadata('siteData'));
     }
+    private static $tableMetadata = null;
+
+    public static function AttributeTableMetadata() {
+
+        if (is_null(self::$tableMetadata)) {
+            self::$tableMetadata = AttributesTable::GetMetadata('siteData');
+        }
+        return self::$tableMetadata;
+    }
 
     /**
      *
@@ -216,20 +225,71 @@ class GeoliveHelper {
         self::Database()->iterate($query, $iteratorCallback);
     }
 
+    public static function CountSitesInAreas($areas) {
+
+        $filter = json_decode(
+            '{
+                    "join":"join","table":"siteData","set":"*","filters":[' . implode(', ', 
+                array_map(
+                    function ($area) {
+                        return '{"field":"paddlingArea","comparator":"equalTo","value":"' . $area .
+                             '", "table":"siteData"}';
+                    }, $areas)) . '
+
+
+                    ]
+                }');
+        
+        // print_r($filter);
+        
+        $query = 'Select count(*) as count FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() . ' ) as m, ' . AttributesFilter::JoinAttributeFilterObject(
+            $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ', 
+            array_map(function ($layer) {
+                return $layer->getId();
+            }, self::VisibleLayers())) . ')';
+        
+        return self::Database()->query($query)[0]->count;
+    }
+
     public static function QueriedSiteListInAreas($areas, $iteratorCallback) {
 
         $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
-             " m on a.mapitem = m.id WHERE m.lid IN (1, 2, 3, 7)";
-        
-        $paWhere = 'AND ' . implode(' AND ', 
-            array_map(
-                function ($pa) {
-                    return 'lower(trim(a.paddlingArea)) LIKE \'%' . GeoliveHelper::Database()->escape($pa) . '%\'';
-                }, $areas));
-        $query = "SELECT * $from $paWhere order by m.name";
-        
-        self::Database()->iterate($query, $iteratorCallback);
-    }
-}
+             " m on a.mapitem = m.id WHERE m.lid IN (" . implode(', ', 
+                array_map(function ($layer) {
+                    return $layer->getId();
+            }, self::VisibleLayers())) . ")";
+            
+            $paWhere = 'AND ' . implode(' AND ', 
+                array_map(
+                    function ($pa) {
+                        return 'lower(trim(a.paddlingArea)) LIKE \'%' . GeoliveHelper::Database()->escape($pa) . '%\'';
+                    }, $areas));
+            $query = "SELECT * $from $paWhere order by m.name";
+            
+            self::Database()->iterate($query, $iteratorCallback);
+        }
 
-GeoliveHelper::LoadCoreLibs();
+        public static function QueriedSiteListInAreasInIdList($areas, $ids, $iteratorCallback) {
+
+            $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
+                 " m on a.mapitem = m.id WHERE m.lid IN (" . implode(', ', 
+                    array_map(function ($layer) {
+                        return $layer->getId();
+                }, self::VisibleLayers())) . ") AND m.id IN(" . implode(', ', 
+                    array_map(function ($id) {
+                        return (int) $id;
+                    }, $ids)) . ")";
+                
+                $paWhere = 'AND ' . implode(' AND ', 
+                    array_map(
+                        function ($pa) {
+                            return 'lower(trim(a.paddlingArea)) LIKE \'%' . GeoliveHelper::Database()->escape($pa) .
+                                 '%\'';
+                        }, $areas));
+                $query = "SELECT * $from $paWhere order by m.name";
+                
+                self::Database()->iterate($query, $iteratorCallback);
+            }
+        }
+        
+        GeoliveHelper::LoadCoreLibs();

@@ -11,6 +11,7 @@ $config = array_merge(array(
 // Behavior('ajax');
 
 ?>
+<link rel="stylesheet" href="ext/css/siteSearch.css" type="text/css">
 <script
 	src="<?php echo UrlFrom(Core::AdminDir().'/js/Ajax/AjaxControlQuery.js'); ?>"
 	type="text/javascript"></script>
@@ -36,10 +37,10 @@ window.addEventListener("load", function(){
 <form id="exportForm" name="bcmtForm" method="POST"
 	action="<?php echo $config['url'] ?>" target="_blank">
 	<input type="hidden" name="task" value="export" /> <input
-		id="exportOutput" type="hidden" name="exportOutput" value="" /> <img
-		id="regionImage" src="../images/stories/sixregions.jpg"
-		alt="Six Regions" width="300px" style="float: left">
-	<table style="margin-left: 330px">
+		id="exportOutput" type="hidden" name="exportOutput" value="" /> <input
+		id="siteList" type="hidden" name="siteList" value="[]" />
+
+	<table>
 		<tr>
 			<td>Region:</td>
 			<td><select id="rgSelect" name="rgSelect" class="btn btn-success"
@@ -57,31 +58,60 @@ echo implode(
 ?>
 			</select></td>
 		</tr>
-		<tr>
-			<td id="paInstr" style="visibility: hidden" colspan=2>Choose the
-				paddling areas you wish to view in either Google Earth or your GPS:</td>
-		</tr>
-		<tr>
-			<td>&nbsp;&nbsp;&nbsp;</td>
-			<td id="areaChoices" style="vertical-align: top"></td>
-		</tr>
-		<tr>
-			<td colspan="2">&nbsp;&nbsp;&nbsp;</td>
-		</tr>
-		<tr>
-			<td>&nbsp;&nbsp;&nbsp;</td>
-			<td id="paSubmit" style="visibility: hidden"><a id="exportToKml"
-				class="btn btn-success" style="margin-right: 30px" data-out="kml"
-				onclick="return false;">Download results to Google Earth</a><a
-				id="exportToGpx" class="btn btn-success"
-				style="margin: 10px; margin-left: 0;" data-out="gpx"
-				onclick="return false;">Download results for your GPS</a><a
-				id="exportToGpx" class="btn btn-primary"
-				style="margin: 10px; margin-left: 0;" data-out="preview"
-				onclick="return false;">Preview Sites</a></td>
-		</tr>
 	</table>
+
+	<div id="paInstr" style="display: none;">
+		<br />
+		<div class="info">Choose the paddling areas you wish to view in either
+			Google Earth or your GPS:</div>
+
+	</div>
+	<br />
+	<table>
+
+		<tr>
+
+			<td id="areaChoices" style="vertical-align: top"></td>
+			<td style="vertical-align: top"><img id="regionImage"
+				src="../images/stories/sixregions.jpg" alt="Six Regions"></td>
+		</tr>
+
+	</table>
+
+
+	<div id="paSubmit" style="visibility: hidden;">
+		<a id="exportToKml" class="btn btn-success" data-out="kml"
+			onclick="return false;">Download results to Google Earth</a> <a
+			id="exportToGpx" class="btn btn-success" data-out="gpx"
+			onclick="return false;">Download results for your GPS</a> <a
+			id="exportToGpx" class="btn btn-primary" data-out="preview"
+			onclick="return false;">Preview Sites</a><span id="siteCount"></span>
+	</div>
+	<br />
+	<div id="sitePreviewHeader" style="visibility: hidden;">
+		<div class="info">You can select or remove individual sites from the
+			list below. Items will not appear in the exported files if they are
+			not selected.</div>
+		<br />
+		<div>
+			<a id="selectAllSites" onclick="return false" class="btn btn-info">select
+				all</a><a id="removeAllSites" onclick="return false"
+				class="btn btn-info">remove all</a><a id="gridView"
+				class="btn btn-primary active"
+				style="padding: 4px 7px; float: right;"><img
+				src="/administrator/components/com_geolive/assets/Map%20Item%20Icons/xsm_table.png?tint=rgb(255,255,255)"></a><a
+				id="tableView" class="btn" style="padding: 4px 8px; float: right;"><img
+				src="/administrator/components/com_geolive/assets/Map%20Item%20Icons/xsm_list.png?tint=rgb(0, 68, 204)"></a>
+		</div>
+	</div>
+	<div id="site_preview" class="grid-view"></div>
+	<br />
+	<div id="paSubmitFooter" style="visibility: hidden;">
+		<a class="btn btn-success" data-out="kml" onclick="return false;">Download
+			results to Google Earth</a> <a class="btn btn-success" data-out="gpx"
+			onclick="return false;">Download results for your GPS</a>
+	</div>
 	<br />
 </form>
-<div id="site_preview"></div>
+
 

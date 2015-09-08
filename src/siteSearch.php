@@ -12,6 +12,8 @@
  * seperated html template from code here. (uses Scaffolds)
  * Removed jquery, since the template uses mootools and the script is relatively small anyway. also moved the javascript into
  * its own file
+ * Added ajax method list_sites. returns a list of all sites in paddling areas as well as an html article for the first 25 items
+ * Added ajax method site_articles returns site articles for array of item id's
  *
  *
  * TODO:
@@ -27,7 +29,7 @@ try {
     include_once ('lib/GeoliveHelper.php');
     
     error_reporting(E_ALL ^ E_NOTICE); // report everything except notices
-    ini_set('display_errors', 0);
+    ini_set('display_errors', 1);
     ini_set('log_errors', 1);
     ini_set('error_log', '../logs/siteSearch.log');
     
@@ -54,11 +56,22 @@ try {
                 $sitesArray = array();
                 // I am working on another method called FilteredSiteListInAreas
                 // which will work using Attribute filters - this will hopefully
-                // be more robust and ignore minor
-                GeoliveHelper::QueriedSiteListInAreas($paArray, 
-                    function ($row) use(&$sitesArray) {
-                        $sitesArray[] = get_object_vars($row);
-                    });
+                // be more robust and ignore minor spelling differences
+                
+                $siteList = json_decode(UrlVar('siteList', '[]'));
+                if (is_array($siteList) && !empty($siteList)) {
+                    GeoliveHelper::QueriedSiteListInAreasInIdList($paArray, $siteList, 
+                        function ($row) use(&$sitesArray) {
+                            $sitesArray[] = get_object_vars($row);
+                        });
+                } else {
+                    GeoliveHelper::QueriedSiteListInAreas($paArray, 
+                        function ($row) use(&$sitesArray) {
+                            $sitesArray[] = get_object_vars($row);
+                        });
+                }
+                
+                // die(Core::GetDatasource()->getQuery());
                 
                 if (UrlVar('exportOutput') == 'kml') {
                     
@@ -80,46 +93,23 @@ try {
             return;
         }
         
+        include_once 'lib/AjaxRequest.php';
+        
         if (UrlVar('task') == 'list_sites') {
-            $args = json_decode(UrlVar('json', '{}'));
             
-            $sites = array();
-            if (is_array($args->paddlingAreas)) {
-                
-                GeoliveHelper::FilteredSiteListInAreas($args->paddlingAreas, 
-                    function ($site) use(&$sites) {
-                        if (Core::Client()->getUsername() === 'admin' && count($sites < 25)) {
-                            ob_start();
-                            
-                            Scaffold('article.mapitem', 
-                                array(
-                                    'item' => MapController::LoadMapItem($site->id),
-                                    'heading' => $site->name,
-                                    'schema' => array(
-                                        'link' => 'itemprop="map"'
-                                    )
-                                ), Core::Get('Maps')->getScaffoldsPath());
-                            
-                            $article = ob_get_contents();
-                            ob_end_clean();
-                            $sites[] = array_merge(get_object_vars($site), 
-                                array(
-                                    'html' => $article
-                                ));
-                        } else {
-                            $sites[] = get_object_vars($site);
-                        }
-                    });
-            }
+            AjaxRequest::ListSites();
+            return;
+        }
+        
+        if (UrlVar('task') == 'count_sites') {
             
-            echo json_encode(
-                array(
-                    'sites' => $sites,
-                    // 'args' => $args,
-                    // 'query' => Core::GetDatasource()->getQuery(),
-                    'success' => true
-                ), JSON_PRETTY_PRINT);
+            AjaxRequest::CountSites();
+            return;
+        }
+        
+        if (UrlVar('task') == 'site_articles') {
             
+            AjaxRequest::ArticlesForSites();
             return;
         }
         
@@ -127,8 +117,8 @@ try {
             
             if (Core::Client()->isAdmin()) {
                 
-                // TODO: check that this works.
                 // TODO: make a phpunit.xml and better unit tests
+                // then phpunit --configuration phpunit.xml
                 
                 print_r(
                     htmlspecialchars(
