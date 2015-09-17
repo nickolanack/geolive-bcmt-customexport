@@ -163,6 +163,11 @@ try {
         
         // HtmlBock is used to seperate templates from code
         // look in scaffolds/html.form.select.php
+        
+        ?><script
+	src="<?php echo UrlFrom(Core::AdminDir().'/js/Ajax/AjaxControlQuery.js'); ?>"
+	type="text/javascript"></script><?php
+        HtmlBlock('paddlingareas.map', array(), __DIR__ . DS . 'scaffolds');
         HtmlBlock('form.select', 
             array(
                 'regions' => $regionObjArray,

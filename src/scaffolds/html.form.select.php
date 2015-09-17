@@ -12,9 +12,6 @@ $config = array_merge(array(
 
 ?>
 <link rel="stylesheet" href="ext/css/siteSearch.css" type="text/css">
-<script
-	src="<?php echo UrlFrom(Core::AdminDir().'/js/Ajax/AjaxControlQuery.js'); ?>"
-	type="text/javascript"></script>
 <script src="ext/js/siteSearch.js" type="text/javascript"></script>
 
 <script type="text/javascript">

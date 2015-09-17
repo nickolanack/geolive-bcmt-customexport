@@ -15,6 +15,10 @@ class GeoliveHelper {
             
             include_once dirname(dirname(__DIR__)) . DS . 'administrator' . DS . 'components' . DS . 'com_geolive' . DS .
                  'core.php';
+            
+            Core::Parameters()->disableCaching();
+            Core::Parameters()->disableCompression();
+            
             Core::LoadPlugin('Attributes');
             Core::LoadPlugin('Maps');
             
@@ -35,7 +39,7 @@ class GeoliveHelper {
             }
         }
         
-        Core::HTML()->setThrowsResouceInclusionError('Document header has already been printed');
+        // Core::HTML()->setThrowsResouceInclusionError('Document header has already been printed');
     }
 
     public static function ScriptWasAccessedDirectlyFromUrl() {
