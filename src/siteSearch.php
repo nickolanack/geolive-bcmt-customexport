@@ -139,22 +139,29 @@ try {
         // display a dynamic form containing regions, and area selection.
         // TODO add layer selection.
         
-        include_once ('lib/PaddlingArea.php');
-        include_once ('lib/Region.php');
-        
-        $regionObjArray = array();
-        
-        foreach (GeoliveHelper::DefinedRegionsList() as $region) {
+        if (!file_exists(__DIR__ . DS . 'regions.json')) {
             
-            $regionObj = new Region($region);
+            include_once ('lib/PaddlingArea.php');
+            include_once ('lib/Region.php');
             
-            foreach (GeoliveHelper::DistinctPaddlineAreas($region) as $pdArea) {
+            $regionObjArray = array();
+            
+            foreach (GeoliveHelper::DefinedRegionsList() as $region) {
                 
-                $paddleObj = new PaddlingArea($pdArea);
-                $regionObj->areas[] = $paddleObj;
+                $regionObj = new Region($region);
+                
+                foreach (GeoliveHelper::DistinctPaddlineAreas($region) as $pdArea) {
+                    
+                    $paddleObj = new PaddlingArea($pdArea);
+                    $regionObj->areas[] = $paddleObj;
+                }
+                
+                $regionObjArray[] = $regionObj;
+                file_put_contents(__DIR__ . DS . 'regions.json', json_encode($regionObjArray, JSON_PRETTY_PRINT));
             }
+        } else {
             
-            $regionObjArray[] = $regionObj;
+            $regionObjArray = json_decode(file_get_contents(__DIR__ . DS . 'regions.json'));
         }
         
         if (empty($regionObjArray)) {
@@ -164,10 +171,6 @@ try {
         // HtmlBock is used to seperate templates from code
         // look in scaffolds/html.form.select.php
         
-        ?><script
-	src="<?php echo UrlFrom(Core::AdminDir().'/js/Ajax/AjaxControlQuery.js'); ?>"
-	type="text/javascript"></script><?php
-        HtmlBlock('paddlingareas.map', array(), __DIR__ . DS . 'scaffolds');
         HtmlBlock('form.select', 
             array(
                 'regions' => $regionObjArray,
@@ -191,7 +194,7 @@ __DIR__ . DS . 'scaffolds');
         }
     } else {
         
-        throw Exception("Unrecognized Execution Environment");
+        throw new Exception("Unrecognized Execution Environment");
     }
 } catch (Exception $e) {
     die(print_r($e, true));

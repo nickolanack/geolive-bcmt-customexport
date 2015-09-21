@@ -26,15 +26,16 @@ class GeoliveHelper {
         }
         
         $file = dirname(__DIR__) . DS . 'siteSearch.php';
+        $map = dirname(__DIR__) . DS . 'paddlingAreas.php';
         
         if (key_exists('TERM', $_SERVER)) {
             self::$isTerm = true;
-            if (isset($argv) && realpath($argv[0]) === $file) {
+            if (isset($argv) && (realpath($argv[0]) === $file || realpath($argv[0]) === $map)) {
                 self::$isDirect = true;
             }
         } else {
             self::$isUrl = true;
-            if (Core::HTML()->getScriptName() == basename($file)) {
+            if (Core::HTML()->getScriptName() == basename($file) || Core::HTML()->getScriptName() == basename($map)) {
                 self::$isDirect = true;
             }
         }
@@ -166,8 +167,7 @@ class GeoliveHelper {
                 json_decode(
                     '{
                     "join":"join","table":"siteData","set":"*","filters":[
-                        {"field":"section","comparator":"equalTo","value":"' .
-                         '[[REGION]]' . '", "table":"siteData"}
+                        {"field":"section","comparator":"equalTo","value":"' . '[[REGION]]' . '", "table":"siteData"}
                     ],"show":"paddlingArea"
                 }'), 'm.id', 'm.type') . ' AND m.lid IN (' . implode(
                 ', ', 

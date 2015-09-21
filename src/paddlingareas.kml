@@ -111,7 +111,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Juan de Fuca</name>
+				<name>Juan De Fuca</name>
 				<description><![CDATA[The Juan de Fuca paddling area stretches from Port Renfrew to Esquimalt Harbour.<br>Vancouver Island Region.]]></description>
 				<styleUrl>#poly-FFCC66-5-115</styleUrl>
 				<ExtendedData>
@@ -171,7 +171,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Clayoquot</name>
+				<name>Clayoquot Sound</name>
 				<description><![CDATA[The Clayoquot paddling area includes the wide area of Clayoquot Sound north to Mate Island.<br>Vancouver Island Region.]]></description>
 				<styleUrl>#poly-00CCCC-5-115</styleUrl>
 				<ExtendedData>
@@ -246,7 +246,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Strait of Georgia South</name>
+				<name>Strait Of Georgia South</name>
 				<description><![CDATA[Strait of Georgia South paddling area<br>South Coast Mainland region]]></description>
 				<styleUrl>#poly-FF0000-5-115</styleUrl>
 				<ExtendedData>
@@ -261,7 +261,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Fraser Pitt</name>
+				<name>Fraser/Pitt</name>
 				<description><![CDATA[Fraser Pitt paddling area<br>South Coast Mainland Region<br><br>Ends at Mission - official boundary salt vs fresh but we will likely have sites to Hope if ETF proposal is pursued.]]></description>
 				<styleUrl>#poly-FFFF33-5-115</styleUrl>
 				<ExtendedData>
@@ -276,7 +276,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Burrard</name>
+				<name>Burrard Inlet</name>
 				<description><![CDATA[Burrard Inlet paddling area<br>South Coast Mainland region]]></description>
 				<styleUrl>#poly-FF6666-5-115</styleUrl>
 				<ExtendedData>
@@ -321,7 +321,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Jervis</name>
+				<name>Jervis Inlet</name>
 				<description><![CDATA[Jervis Inlet paddling area<br>South Coast Mainland Region]]></description>
 				<styleUrl>#poly-009900-5-115</styleUrl>
 				<ExtendedData>
@@ -336,7 +336,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Strait of Georgia North</name>
+				<name>Strait Of Georgia North</name>
 				<description><![CDATA[Strait of Georgia North paddling area<br>South Coast Mainland Region]]></description>
 				<styleUrl>#poly-FF6666-5-115</styleUrl>
 				<ExtendedData>
@@ -381,7 +381,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Bute</name>
+				<name>Bute Inlet</name>
 				<description><![CDATA[Bute Inlet paddling area<br>Discoveries & Mid Coast Region]]></description>
 				<styleUrl>#poly-33CC00-5-115</styleUrl>
 				<ExtendedData>
@@ -396,7 +396,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Cordero</name>
+				<name>Cordero Channel</name>
 				<description><![CDATA[Cordero Channel paddling area<br>Discoveries & Mid Coast Region]]></description>
 				<styleUrl>#poly-33CCFF-5-115</styleUrl>
 				<ExtendedData>
@@ -411,7 +411,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Loughborough</name>
+				<name>Loughborough Inlet</name>
 				<description><![CDATA[Loughborough Inlet paddling area<br>Discoveries & Mid Coast region]]></description>
 				<styleUrl>#poly-6633FF-5-115</styleUrl>
 				<ExtendedData>
@@ -441,7 +441,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Knight</name>
+				<name>Knight Inlet</name>
 				<description><![CDATA[Knight Inlet paddling area<br>Discoveries & Mid Coast Region]]></description>
 				<styleUrl>#poly-009900-5-115</styleUrl>
 				<ExtendedData>
@@ -516,7 +516,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Smith</name>
+				<name>Smith Sound</name>
 				<description><![CDATA[Smith Sound paddling area<br>Central Coast Region]]></description>
 				<styleUrl>#poly-3333FF-5-115</styleUrl>
 				<ExtendedData>
@@ -531,7 +531,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Fitz Hugh</name>
+				<name>Fitz Hugh Sound</name>
 				<description><![CDATA[Fitz Hugh Sound paddling area<br>Central Coast Region]]></description>
 				<styleUrl>#poly-66CCCC-5-115</styleUrl>
 				<ExtendedData>
@@ -561,7 +561,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Queens</name>
+				<name>Queens Sound</name>
 				<description><![CDATA[Queens Sound paddling area<br>Central Coast Region]]></description>
 				<styleUrl>#poly-009900-5-115</styleUrl>
 				<ExtendedData>
@@ -591,7 +591,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Milbanke</name>
+				<name>Milbanke Sound</name>
 				<description><![CDATA[Milbanke Sound paddling area<br>Central Coast Region]]></description>
 				<styleUrl>#poly-FF9900-5-115</styleUrl>
 				<ExtendedData>
@@ -756,7 +756,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Hecate</name>
+				<name>Hecate Strait</name>
 				<description><![CDATA[Hecate Strait paddling area<br>North Coast Region]]></description>
 				<styleUrl>#poly-FFFF66-5-140</styleUrl>
 				<ExtendedData>
@@ -786,7 +786,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Chatham</name>
+				<name>Chatham Sound</name>
 				<description><![CDATA[Chatham Sound paddling area<br>North Coast Region]]></description>
 				<styleUrl>#poly-990000-5-115</styleUrl>
 				<ExtendedData>
@@ -801,7 +801,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Dixon</name>
+				<name>Dixon Entrance</name>
 				<description><![CDATA[Dixon Entrance paddling area<br>North Coast Region]]></description>
 				<styleUrl>#poly-663366-5-115</styleUrl>
 				<ExtendedData>
@@ -831,7 +831,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>East Graham</name>
+				<name>E Graham</name>
 				<description><![CDATA[East Graham Island paddling area<br>Haida Gwaii Region]]></description>
 				<styleUrl>#poly-33FFFF-3-89</styleUrl>
 				<ExtendedData>
@@ -861,7 +861,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>West Graham</name>
+				<name>W Graham</name>
 				<description><![CDATA[West Graham Island paddling area<br>Haida Gwaii Region]]></description>
 				<styleUrl>#poly-33CCFF-3-89</styleUrl>
 				<ExtendedData>
@@ -891,7 +891,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Masset</name>
+				<name>Masset Sd</name>
 				<description><![CDATA[Masset Inlet paddling area<br>Haida Gwaii Region]]></description>
 				<styleUrl>#poly-3333FF-3-89</styleUrl>
 				<ExtendedData>
@@ -906,7 +906,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>Skidegate</name>
+				<name>Skidegate Channel</name>
 				<description><![CDATA[Skidegate Channel paddling area<br>Haida Gwaii Region]]></description>
 				<styleUrl>#poly-33CCFF-3-64</styleUrl>
 				<ExtendedData>
@@ -921,7 +921,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>North Graham</name>
+				<name>N Graham</name>
 				<description><![CDATA[North Graham Island paddling area<br>Haida Gwaii Region]]></description>
 				<styleUrl>#poly-CCFFFF-3-89</styleUrl>
 				<ExtendedData>
@@ -936,7 +936,7 @@
 				</Polygon>
 			</Placemark>
 			<Placemark>
-				<name>East Moresby</name>
+				<name>E Moresby</name>
 				<description><![CDATA[East Moresby Island paddling area<br>Haida Gwaii Region]]></description>
 				<styleUrl>#poly-000066-3-89</styleUrl>
 				<ExtendedData>

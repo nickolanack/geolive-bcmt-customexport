@@ -1,20 +1,72 @@
-
-<script src="https://google.mapsapis.com/maps/api/js"> </script>
+<html>
+<head>
+<script
+	src="http://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools-core.js"
+	type="text/javascript"></script>
+<script
+	src="http://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools-more.js"
+	type="text/javascript"></script>
+<script
+	src="http://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools_compat.js"
+	type="text/javascript"></script>
 <script type="text/javascript"
 	src="<?php echo UrlFrom(Core::ViewerDir().DS.'SimpleKml.js');?>">
     </script>
+<script
+	src="<?php echo UrlFrom(Core::AdminDir().'/js/Ajax/AjaxControlQuery.js'); ?>"
+	type="text/javascript"></script>
 
-<div id="map"></div>
+<script
+	src="<?php echo UrlFrom(dirname(__DIR__).'/js/paddlingAreas.js'); ?>"
+	type="text/javascript"></script>
 <style>
 #map {
 	width: 100%;
-	height: 400px;
+	height: 100%;
+}
+
+body {
+	margin: 0;
+}
+
+.paddling-areas-detail {
+	background-color: rgba(255, 255, 255, 0.6);
+	padding: 10px 20px;
+	color: #55acee;
+	text-shadow: 0 0 3px white, 0 0 1px white;
+	font-size: 15px;
+	font-weight: bold;
+	width: 100%;
+	pointer-events: none;
+}
+
+.paddling-areas-detail .no-region {
+	color: tomato;
+	font-weight: 100;
+}
+
+button.btn.btn-danger {
+	width: 50px;
+	height: 38px;
+	border: none;
+	background-color: #55ACEE;
+	color: white;
+	font-size: 15px;
+	cursor: pointer;
 }
 </style>
-<script type="text/javascript">
+</head>
+<body>
 
 
-function loadMap(){
+
+	<div id="map"></div>
+
+
+	<script type="text/javascript">
+
+
+function initMap(){
 
 console.log("hello world");
 
@@ -26,44 +78,23 @@ var map = new google.maps.Map(document.getElementById('map'), {
         lng:-125.25016503906248
         },
     zoom: 6,
-    mapTypeId:google.maps.MapTypeId.ROADMAP
+    mapTypeId:google.maps.MapTypeId.ROADMAP,
+    panControl:true,
+    zoomControl:true
   });
-  <?php
-/*
- * (new XMLControlQuery(<?php echo json_encode(UrlFrom(dirname(__DIR__).DS.'paddlingareas.kml')); ?>, "",
- * {})).addEvent("success",function(xml){
- *
- * //console.log(xml);
- *
- * (new SimpleParser({
- * polygonTransform:function(polygonParams, xmlSnippet){
- * //console.log(polygonParams);
- *
- * var polygon= new google.maps.Polygon((function(){
- * var polygonOpts={
- * paths:polygonParams.coordinates.map(function(coord){
- * return {lat:coord[0], lng:coord[1]};
- * })(),
- * fillColor:'#000000',
- * fillOpacity:0.5,
- * strokeColor:'#000000',
- * strokeWidth:1,
- * strokeOpacity:1
- * };
- * console.log(polygonOpts);
- * return polygonOpts;
- * })());
- * polygon.setMap(map);
- *
- * }
- * })).parsePolygons(xml);
- *
- * }).execute();
- */
-?>
+
+PaddlingRegionMapSearchBehavior(
+    <?php echo file_get_contents(dirname(__DIR__) . DS . 'regions.json'); ?>,
+    map,
+    <?php echo json_encode(UrlFrom(dirname(__DIR__) . DS . 'paddlingareas.kml')); ?>
+    );
+
 }
 
 
    </script>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnTJCsJO2piovlyQfpmemfQXVjwkdB7R4&callback=initMap"></script>
+</body>
 
-<?php
+</html>

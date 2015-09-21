@@ -11,6 +11,9 @@ $config = array_merge(array(
 // Behavior('ajax');
 
 ?>
+<script
+	src="<?php echo UrlFrom(Core::AdminDir().'/js/Ajax/AjaxControlQuery.js'); ?>"
+	type="text/javascript"></script>
 <link rel="stylesheet" href="ext/css/siteSearch.css" type="text/css">
 <script src="ext/js/siteSearch.js" type="text/javascript"></script>
 
@@ -31,18 +34,27 @@ window.addEventListener("load", function(){
 
 <a name="bcmtFormAnchor"></a>
 <h3>Search for site by Region and Paddling Area</h3>
+
+
+
+<iframe id="mapFrame" class="map-view"
+	src="<?php echo UrlFrom(dirname(__DIR__).DS.'paddlingAreas.php');?>"
+	style="border: none; width: 100%; height: 550px;"></iframe>
+
+
 <form id="exportForm" name="bcmtForm" method="POST"
 	action="<?php echo $config['url'] ?>" target="_blank">
 	<input type="hidden" name="task" value="export" /> <input
 		id="exportOutput" type="hidden" name="exportOutput" value="" /> <input
 		id="siteList" type="hidden" name="siteList" value="[]" />
-
-	<table>
-		<tr>
-			<td>Region:</td>
-			<td><select id="rgSelect" name="rgSelect" class="btn btn-success"
-				style="height: 30px;">
-					<option>choose a region</option>
+	<div id="formFrame" class="form-view"
+		style="position: absolute; visibility: hidden;">
+		<table>
+			<tr>
+				<td>Region:</td>
+				<td><select id="rgSelect" name="rgSelect" class="btn btn-success"
+					style="height: 30px;">
+						<option>choose a region</option>
 			<?php
 
 echo implode(
@@ -54,35 +66,35 @@ echo implode(
 
 ?>
 			</select></td>
-		</tr>
-	</table>
+			</tr>
+		</table>
 
-	<div id="paInstr" style="display: none;">
+		<div id="paInstr" style="display: none;">
+			<br />
+			<div class="info">Choose the paddling areas you wish to view in
+				either Google Earth or your GPS:</div>
+
+		</div>
 		<br />
-		<div class="info">Choose the paddling areas you wish to view in either
-			Google Earth or your GPS:</div>
+		<table>
 
+			<tr>
+
+				<td id="areaChoices" style="vertical-align: top"></td>
+				<td style="vertical-align: top"><img id="regionImage"
+					src="../images/stories/sixregions.jpg" alt="Six Regions"></td>
+			</tr>
+
+		</table>
 	</div>
-	<br />
-	<table>
 
-		<tr>
-
-			<td id="areaChoices" style="vertical-align: top"></td>
-			<td style="vertical-align: top"><img id="regionImage"
-				src="../images/stories/sixregions.jpg" alt="Six Regions"></td>
-		</tr>
-
-	</table>
-
-
-	<div id="paSubmit" style="visibility: hidden;">
-		<a id="exportToKml" class="btn btn-success" data-out="kml"
-			onclick="return false;">Download results to Google Earth</a> <a
-			id="exportToGpx" class="btn btn-success" data-out="gpx"
-			onclick="return false;">Download results for your GPS</a> <a
-			id="exportToGpx" class="btn btn-primary" data-out="preview"
-			onclick="return false;">Preview Sites</a><span id="siteCount"></span>
+	<div id="paSubmit" style="">
+		<a id="exportToKml" class="btn" data-out="kml" onclick="return false;"
+			disabled="true">Download results to Google Earth</a> <a
+			id="exportToGpx" class="btn" data-out="gpx" onclick="return false;"
+			disabled="true">Download results for your GPS</a> <a id="exportToGpx"
+			class="btn" data-out="preview" onclick="return false;"
+			disabled="true">Preview Sites</a><span id="siteCount"></span>
 	</div>
 	<br />
 	<div id="sitePreviewHeader" style="visibility: hidden;">
@@ -109,6 +121,7 @@ echo implode(
 			onclick="return false;">Download results for your GPS</a>
 	</div>
 	<br />
+
 </form>
 
 
