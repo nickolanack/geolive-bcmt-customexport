@@ -75,11 +75,24 @@ try {
                 
                 if (UrlVar('exportOutput') == 'kml') {
                     
-                    header('Content-Type: application/kml+xml;');
-                    header('Content-disposition: filename="export.kml"');
+                    header('Content-Type: application/kmz+zip;');
+                    header('Content-disposition: filename="export.kmz"');
+                    $filename = tempnam(__DIR__, 'zip');
                     include_once ('lib/KmlWriter.php');
                     $kmlWriter = new KmlWriter();
-                    echo $kmlWriter->writeKml($sitesArray);
+                    $kmlWriter->writeKml($sitesArray);
+                    
+                    $zip = new ZipArchive();
+                    $zip->open($filename);
+                    $zip->addFromString('default.kml', $kmlWriter->writeKml($sitesArray));
+                    
+                    foreach ($kmlWriter->getStyles() as $icon) {
+                        $zip->addFile(__DIR__ . DS . $icon, $icon);
+                    }
+                    $zip->close();
+                    
+                    readfile($filename);
+                    unlink($filename);
                 } else {
                     
                     header('Content-Type: application/gpx+xml;');
