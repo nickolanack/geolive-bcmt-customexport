@@ -4,4 +4,4 @@ This was a project for a online Kyaking community website: https://www.bcmarinet
 
 Here is a screenshot of how the form/script looks
 
-[alt tag](https://raw.github.com/nickolanack/geolive-bcmt-customexport/master/screenshot.png)
+![alt tag](https://raw.github.com/nickolanack/geolive-bcmt-customexport/master/screenshot.png)
