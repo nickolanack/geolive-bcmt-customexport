@@ -155,8 +155,7 @@ class GeoliveHelper {
                 json_decode(
                     '{
                     "join":"join","table":"siteData","set":"*","filters":[
-                        {"field":"section","comparator":"equalTo","value":"' .
-                         '[[REGION]]' . '", "table":"siteData"}
+                        {"field":"section","comparator":"equalTo","value":"' . '[[REGION]]' . '", "table":"siteData"}
                     ],"show":"paddlingArea"
                 }'), 'm.id', 'm.type') . ' AND m.lid IN (' . implode(
                 ', ', 
@@ -209,7 +208,7 @@ class GeoliveHelper {
         // print_r($filter);
         
         $query = 'Select m.id as id, m.name as name FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() .
-             '  WHERE readAccess IN (\'' . implode('\', \'', Core::Client()->getAccessGroups()) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
+             ' WHERE readAccess IN (\'' . implode('\', \'', Core::Client()->getAccessGroups()) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
                 $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ', 
                 array_map(function ($layer) {
                     return $layer->getId();
@@ -247,9 +246,10 @@ class GeoliveHelper {
             public static function QueriedSiteListInAreas($areas, $iteratorCallback) {
                 $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
                      " m on a.mapitem = m.id WHERE m.lid IN (" . implode(', ', 
-                        array_map(function ($layer) {
-                            return $layer->getId();
-                    }, self::VisibleLayers())) . ")";
+                        array_map(
+                            function ($layer) {
+                                return $layer->getId();
+                        }, self::VisibleLayers())) . ")";
                     
                     $paWhere = 'AND ' . implode(' AND ', 
                         array_map(
