@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
-header>h1 {
+header>h1, body.layout-mode-responsive header>h1 {
 	color: #55acee;
 	font-weight: 100;
 	font-size: 20px;
@@ -91,31 +91,7 @@ form#exportForm .info {
 	padding: 0 20px;
 }
 
-/*fix*/
-@media only screen and (max-width: 1199px) and (min-width: 960px) {
-	body.layout-mode-responsive #site_preview article>a {
-		height: 110px;
-	}
-}
 
-@media ( max-width : 959px) and (min-width: 768px) {
-	body.layout-mode-responsive #site_preview article>a {
-		height: 119px;
-	}
-}
-
-@media ( max-width : 767px) {
-	body.layout-mode-responsive #site_preview article>a {
-		height: 119px;
-	}
-}
-
-}
-@media only screen and (max-width: 480px) {
-	body.layout-mode-responsive #site_preview article>a {
-		height: 96px;
-	}
-}
 
 #site_preview ul>* {
 	display: none;
@@ -125,16 +101,17 @@ form#exportForm .info {
 #site_preview.table-view article {
 	display: inline-block;
 	vertical-align: top;
-	width: 150px;
+	width: 100px;
 }
 
 #site_preview.table-view>div {
 	display: block;
-	width: inherit;
-	height: 30px;
-	padding-left: 30px;
-	margin: 0;
-	border-top-width: 0;
+    width: inherit;
+    height: 30px;
+    padding: 0;
+    padding-left: 30px;
+    margin: 0;
+    border-top-width: 0;
 }
 
 #site_preview.table-view>div:first-child {
@@ -143,7 +120,7 @@ form#exportForm .info {
 
 #site_preview.table-view input[type="checkbox"] {
 	right: initial;
-	top: 9px;
+	top: 4px;
 	left: 5px;
 }
 
@@ -157,34 +134,89 @@ form#exportForm .info {
 
 #site_preview ul {
 	display: inline;
+	margin-left: 0;
 }
 
 #site_preview.table-view li{
 
 
 	text-align: center;
-	border-right: 1px solid cornflowerblue;
-	height: 28px;
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
 	border-top: none;
 	border-bottom: none;
 	padding: 0 5px;
 	vertical-align: top;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	height: 28px;
+	height: 30px;
 	white-space: nowrap;
+	line-height: 30px;
+	font-size: 12px;
 	
 }
 
 #site_preview.table-view li.atr-tentSites {
 	display: inline-block;
-	border-left: 1px solid cornflowerblue;
-	width: 20px;
-	
+	width: 30px;
+}
+
+#site_preview.table-view li.atr-siteFunction {
+    display: inline-block;
+    width: 85px;
+    text-align: left;
 }
 
 #site_preview.table-view li.atr-landingComments {
 	display: inline-block;
-	width: 300px;
+	width: 200px;
 	text-align: left;
+}
+
+#site_preview.table-view li.atr-campComments {
+	display: inline-block;
+	width: 150px;
+	text-align: left;
+}
+
+#site_preview.table-view li.atr-coordinates {
+	display: inline-block;
+	width: 150px;
+	text-align: left;
+}
+
+.table-view header>h1, body.layout-mode-responsive .table-view header>h1 {
+    color: #6e6e6e;
+    font-size: 15px;
+    line-height: 30px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    padding-right: 5px;
+    font-size: 12px;
+}
+
+
+#site_preview.table-view li.atr-icon {
+    display: inline-block;
+    border-right: none;
+}
+
+#site_preview.table-view li.atr-icon>img {
+    max-height: 22px;
+    width: auto;
+    opacity: 0.7;
+    -webkit-filter: grayscale(100%);
+}
+
+#site_preview.table-view>div:hover  li.atr-icon>img{
+
+    opacity: 1;
+    -webkit-filter: grayscale(0%);
+}
+
+
+.table-view>div:hover header>h1, body.layout-mode-responsive .table-view>div:hover header>h1, #site_preview.table-view>div:hover li {
+    color:cornflowerblue
+}
+
+#site_preview.table-view>div:hover{
+	background-color:rgba(0,0,0,0.02);
 }

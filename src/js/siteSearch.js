@@ -252,6 +252,11 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
 			value=site.attributes[name];
 			attributesEl.appendChild(new Element('li',{html:value, 'data-field':name, 'class':'atr-'+name}));
 		});
+		attributesEl.appendChild(new Element('li',{html:site.details.coordinates.slice(0,2).map(function(coord){
+			return Math.round(coord*1000)/1000.0;
+			
+		}).join(', '), 'data-field':'coordinates', 'class':'atr-coordinates'}));
+		attributesEl.appendChild(new Element('li',{html:'<img src="'+site.details.icon+'"/>', 'data-field':'icon', 'class':'atr-icon'}));
 
 		siteArticle.appendChild(attributesEl);
 	}

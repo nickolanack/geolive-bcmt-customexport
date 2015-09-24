@@ -3,6 +3,7 @@
 class KmlWriter {
     private $dom;
     private $docNode;
+    private $styles = array();
 
     function __construct() {
 
@@ -13,22 +14,58 @@ class KmlWriter {
         $this->docNode = $parNode->appendChild($dnode);
     }
 
+    function getStyles() {
+
+        return $this->styles;
+    }
+
     function writeKml($sitesArray) {
 
         foreach ($sitesArray as $site) {
             $coordArray = Util::parseCoords($site['coordinates']);
             $coordStr = $coordArray['lng'] . "," . $coordArray['lat'] . ",5.00";
             
+            $icon = $site['style'];
+            $iconName = substr($icon, strrpos($icon, '/') + 1);
+            $styleName = substr($iconName, 0, strpos($iconName, '.'));
+            
+            // die($styleName);
+            if (!in_array($styleName, $this->styles)) {
+                if (!file_exists(dirname(__DIR__) . DS . $iconName)) {
+                    file_get_contents($site['style']);
+                    file_put_contents(dirname(__DIR__) . DS . $iconName, file_get_contents($site['style']));
+                }
+                $this->styles[$styleName] = $iconName;
+                
+                $style = $this->dom->createElement('Style');
+                $style->setAttribute('id', $styleName);
+                $iconstyle = $this->dom->createElement('IconStyle');
+                
+                $icon = $this->dom->createElement('Icon');
+                $href = $this->dom->createElement('href', $iconName);
+                
+                $icon->appendChild($href);
+                $iconstyle->appendChild($icon);
+                $style->appendChild($iconstyle);
+                $this->docNode->appendChild($style);
+            }
+            
             $node = $this->dom->createElement('Placemark');
             $placeNode = $this->docNode->appendChild($node);
             // $placeNode->setAttribute('id', 'placemark' . $row['id']);
             $nameNode = $this->dom->createElement('name', $site['name']);
             $placeNode->appendChild($nameNode);
-            $descNode = $this->dom->createElement('description', 
-                '<![CDATA[<b>Site Function: </b>' . $site['siteFunction'] . '<br/><br/><b>Landing Comments: </b>' .
-                     $site['landingComments'] . '<br/><br/><b>Campsite Comments: </b>' . $site['campComments'] .
-                     '<br/><br/><b>Number of Tent Sites: </b>' . $site['tentSites']);
+            
+            $descNode = $this->dom->createElement('description');
+            $descNode->appendChild(
+                $this->dom->createCDATASection(
+                    '<b>Site Function: </b>' . $site['siteFunction'] . '<br/><br/><b>Landing Comments: </b>' .
+                         $site['landingComments'] . '<br/><br/><b>Campsite Comments: </b>' . $site['campComments'] .
+                         '<br/><br/><b>Number of Tent Sites: </b>' . $site['tentSites']));
             $placeNode->appendChild($descNode);
+            
+            $placeNode->appendChild($this->dom->createElement('styleUrl', '#' . $styleName));
+            
             $pointNode = $this->dom->createElement('Point');
             $placeNode->appendChild($pointNode);
             
