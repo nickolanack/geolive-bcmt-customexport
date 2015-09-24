@@ -1,5 +1,5 @@
 <?php
-if (!defined('DS')) {
+if (! defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 
@@ -10,8 +10,7 @@ class GeoliveHelper {
     private static $isUrl = false;
 
     public static function LoadCoreLibs() {
-
-        if (!self::$isLoaded) {
+        if (! self::$isLoaded) {
             
             include_once dirname(dirname(__DIR__)) . DS . 'administrator' . DS . 'components' . DS . 'com_geolive' . DS .
                  'core.php';
@@ -44,27 +43,22 @@ class GeoliveHelper {
     }
 
     public static function ScriptWasAccessedDirectlyFromUrl() {
-
         return self::$isDirect && self::$isUrl;
     }
 
     public static function ScriptWasIncludedFromJoomla() {
-
-        return (!self::$isDirect) && self::$isUrl;
+        return (! self::$isDirect) && self::$isUrl;
     }
 
     public static function ScriptWasIncludedFromCommandline() {
-
-        return (!self::$isDirect) && self::$isTerm;
+        return (! self::$isDirect) && self::$isTerm;
     }
 
     public static function ScriptWasAccessedDirectlyFromCommandLine() {
-
         return self::$isDirect && self::$isTerm;
     }
 
     public static function LoadGeoliveFromCommandLine() {
-
         $cmd = getopt('', 
             array(
                 'session:',
@@ -73,7 +67,7 @@ class GeoliveHelper {
                 'scriptpath:'
             ));
         
-        if (!key_exists('session', $cmd)) {
+        if (! key_exists('session', $cmd)) {
             exit('Core: terminal commands require --session');
         }
         
@@ -92,7 +86,6 @@ class GeoliveHelper {
     private static $visibleLayers;
 
     public static function VisibleLayers() {
-
         if (is_null(self::$visibleLayers)) {
             
             $readAccessFilter = array(
@@ -114,18 +107,15 @@ class GeoliveHelper {
      * @return string table name with prefix
      */
     public static function MapitemTable() {
-
         return Core::LoadPlugin('Maps')->getDatabase()->table(MapsDatabase::$MAPITEM);
     }
 
     public static function AttributeTable() {
-
         return Core::LoadPlugin('Attributes')->getDatabase()->decodeTableName(AttributesTable::GetMetadata('siteData'));
     }
     private static $tableMetadata = null;
 
     public static function AttributeTableMetadata() {
-
         if (is_null(self::$tableMetadata)) {
             self::$tableMetadata = AttributesTable::GetMetadata('siteData');
         }
@@ -137,12 +127,10 @@ class GeoliveHelper {
      * @return CoreDatabase is actually MapsDatabase object, but only CoreDatabase functions are neccesary
      */
     public static function Database() {
-
         return Core::LoadPlugin('Maps')->getDatabase();
     }
 
     public static function DefinedRegionsList() {
-
         $tableMetadata = AttributesTable::GetMetadata('siteData');
         $rgArray = array_map(function ($region) {
             return ucwords($region->section);
@@ -167,13 +155,14 @@ class GeoliveHelper {
                 json_decode(
                     '{
                     "join":"join","table":"siteData","set":"*","filters":[
-                        {"field":"section","comparator":"equalTo","value":"' . '[[REGION]]' . '", "table":"siteData"}
+                        {"field":"section","comparator":"equalTo","value":"' .
+                         '[[REGION]]' . '", "table":"siteData"}
                     ],"show":"paddlingArea"
                 }'), 'm.id', 'm.type') . ' AND m.lid IN (' . implode(
                 ', ', 
                 array_map(
                     function ($layer) {
-                        if (!method_exists($layer, 'getId')) {
+                        if (! method_exists($layer, 'getId')) {
                             throw new Exception(print_r($layer, true));
                         }
                         return $layer->getId();
@@ -204,7 +193,6 @@ class GeoliveHelper {
      * @return string
      */
     public static function FilteredSiteListInAreas($areas, $iteratorCallback) {
-
         $filter = json_decode(
             '{
                     "join":"join","table":"siteData","set":"*","filters":[' . implode(', ', 
@@ -220,80 +208,82 @@ class GeoliveHelper {
         
         // print_r($filter);
         
-        $query = 'Select m.id as id, m.name as name FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() . ' ) as m, ' . AttributesFilter::JoinAttributeFilterObject(
-            $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ', 
-            array_map(function ($layer) {
-                return $layer->getId();
-            }, self::VisibleLayers())) . ') ORDER BY a.paddlingArea';
-        
-        self::Database()->iterate($query, $iteratorCallback);
-    }
-
-    public static function CountSitesInAreas($areas) {
-
-        $filter = json_decode(
-            '{
-                    "join":"join","table":"siteData","set":"*","filters":[' . implode(', ', 
-                array_map(
-                    function ($area) {
-                        return '{"field":"paddlingArea","comparator":"equalTo","value":"' . $area .
-                             '", "table":"siteData"}';
-                    }, $areas)) . '
-
-
-                    ]
-                }');
-        
-        // print_r($filter);
-        
-        $query = 'Select count(*) as count FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() . ' ) as m, ' . AttributesFilter::JoinAttributeFilterObject(
-            $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ', 
-            array_map(function ($layer) {
-                return $layer->getId();
-            }, self::VisibleLayers())) . ')';
-        
-        return self::Database()->query($query)[0]->count;
-    }
-
-    public static function QueriedSiteListInAreas($areas, $iteratorCallback) {
-
-        $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
-             " m on a.mapitem = m.id WHERE m.lid IN (" . implode(', ', 
+        $query = 'Select m.id as id, m.name as name FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() .
+             '  WHERE readAccess IN (\'' . implode('\', \'', Core::Client()->getAccessGroups()) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
+                $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ', 
                 array_map(function ($layer) {
                     return $layer->getId();
-            }, self::VisibleLayers())) . ")";
-            
-            $paWhere = 'AND ' . implode(' AND ', 
-                array_map(
-                    function ($pa) {
-                        return 'lower(trim(a.paddlingArea)) LIKE \'%' . GeoliveHelper::Database()->escape($pa) . '%\'';
-                    }, $areas));
-            $query = "SELECT * $from $paWhere order by m.name";
+            }, self::VisibleLayers())) . ') ORDER BY a.paddlingArea';
             
             self::Database()->iterate($query, $iteratorCallback);
         }
 
-        public static function QueriedSiteListInAreasInIdList($areas, $ids, $iteratorCallback) {
+        public static function CountSitesInAreas($areas) {
+            $filter = json_decode(
+                '{
+                    "join":"join","table":"siteData","set":"*","filters":[' . implode(', ', 
+                    array_map(
+                        function ($area) {
+                            return '{"field":"paddlingArea","comparator":"equalTo","value":"' . $area .
+                                 '", "table":"siteData"}';
+                        }, $areas)) . '
 
-            $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
-                 " m on a.mapitem = m.id WHERE m.lid IN (" . implode(', ', 
+
+                    ]
+                }');
+            
+            // print_r($filter);
+            
+            $query = 'Select count(*) as count FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() .
+                 ' WHERE readAccess IN (\'' . implode('\', \'', Core::Client()->getAccessGroups()) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
+                    $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ', 
                     array_map(function ($layer) {
                         return $layer->getId();
-                }, self::VisibleLayers())) . ") AND m.id IN(" . implode(', ', 
-                    array_map(function ($id) {
-                        return (int) $id;
-                    }, $ids)) . ")";
+                }, self::VisibleLayers())) . ')';
                 
-                $paWhere = 'AND ' . implode(' AND ', 
-                    array_map(
-                        function ($pa) {
-                            return 'lower(trim(a.paddlingArea)) LIKE \'%' . GeoliveHelper::Database()->escape($pa) .
-                                 '%\'';
-                        }, $areas));
-                $query = "SELECT * $from $paWhere order by m.name";
-                
-                self::Database()->iterate($query, $iteratorCallback);
+                return self::Database()->query($query)[0]->count;
             }
-        }
-        
-        GeoliveHelper::LoadCoreLibs();
+
+            public static function QueriedSiteListInAreas($areas, $iteratorCallback) {
+                $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
+                     " m on a.mapitem = m.id WHERE m.lid IN (" . implode(', ', 
+                        array_map(function ($layer) {
+                            return $layer->getId();
+                    }, self::VisibleLayers())) . ")";
+                    
+                    $paWhere = 'AND ' . implode(' AND ', 
+                        array_map(
+                            function ($pa) {
+                                return 'lower(trim(a.paddlingArea)) LIKE \'%' . GeoliveHelper::Database()->escape($pa) .
+                                     '%\'';
+                            }, $areas));
+                    $query = "SELECT * $from $paWhere order by m.name";
+                    
+                    self::Database()->iterate($query, $iteratorCallback);
+                }
+
+                public static function QueriedSiteListInAreasInIdList($areas, $ids, $iteratorCallback) {
+                    $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
+                         " m on a.mapitem = m.id WHERE m.lid IN (" . implode(', ', 
+                            array_map(
+                                function ($layer) {
+                                    return $layer->getId();
+                            }, self::VisibleLayers())) . ") AND m.id IN(" . implode(', ', 
+                            array_map(
+                                function ($id) {
+                                    return (int) $id;
+                                }, $ids)) . ")";
+                        
+                        $paWhere = 'AND ' . implode(' AND ', 
+                            array_map(
+                                function ($pa) {
+                                    return 'lower(trim(a.paddlingArea)) LIKE \'%' .
+                                         GeoliveHelper::Database()->escape($pa) . '%\'';
+                                }, $areas));
+                        $query = "SELECT * $from $paWhere order by m.name";
+                        
+                        self::Database()->iterate($query, $iteratorCallback);
+                    }
+                }
+                
+                GeoliveHelper::LoadCoreLibs();
