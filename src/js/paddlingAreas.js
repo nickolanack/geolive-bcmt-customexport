@@ -4,9 +4,17 @@
 
 function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 
+	/*
+	 * current todos:
+	 * move functions and variables below into class PaddlingAreasSelection
+	 */
+	
+	
 	var polysByArea={};
 	var areasByRegion={};
 	var regionsByArea={};
+	
+	var popoversByArea={};
 
 	(regionsData).forEach(function(regionObj){
 
@@ -62,6 +70,15 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 		return polys;
 
 	}
+	
+	var popoverByArea=function(area){
+		if((typeof popoversByArea[area])=='undefined'){
+			popoversByArea[area]=new UIMapPopover(polysByArea[area],{
+				anchor:UIPopover.AnchorTo(['bottom'])
+				}).setMap(map);
+		}
+		return popoversByArea[area];
+	}
 
 	var detail=new Element('div', {'class':'paddling-areas-detail',html:'<span class="no-region">select a region</span>'});
 	var clear=new Element('button', {'class':'btn btn-danger',html:'reset'});
@@ -88,25 +105,11 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 						map.controls[google.maps.ControlPosition.TOP_RIGHT].insertAt(0, clear);	
 
 
-						
 
-						
 						clear.addEvent('click',function(){				
 							me._reset();
 						});
-
-
-
-
-						
-
-
-						
-
-						
-
-
-						
+				
 
 
 						(new SimpleParser({
@@ -252,9 +255,12 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 					var polygon=polysByArea[area];
 					polygon.setOptions({fillColor:'#55acee'});
 				//},250)
+					
+				me._setAreaPoverTextSelectable(area);
 			}else{
 				me._setSelectedArea(area);
 				me.fireEvent('selectArea', [area]);
+				me._setAreaPoverTextRemoveable(area);
 			}
 			
 		},
@@ -266,15 +272,30 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 				return;
 
 			}
+			var polygon=polysByArea[area];
 			if(me._isSelectedArea(area)){
-
+				me._setAreaPoverTextRemoveable(area).show();	
 			}else{
-				var polygon=polysByArea[area];
-				polygon.setOptions({fillColor:'#55acee'})
 				
+				polygon.setOptions({fillColor:'#55acee'})
+				me._setAreaPoverTextSelectable(area).show();			
 			}
 			detail.innerHTML=selectedRegion+' - '+area;
+			
+			
+			
+			
 
+		},
+		_setAreaPoverTextSelectable(area){
+			var popover=popoverByArea(area);
+			popover.setText(new Element('span', {html:'click to add <span class="pop-area">'+area+'</span> to the current selection', style:"width:200px;"}));
+			return popover;
+		},
+		_setAreaPoverTextRemoveable(area){
+			var popover=popoverByArea(area);
+			popover.setText(new Element('span', {html:'click to remove <span class="pop-area remove">'+area+'</span> from the current selection', style:"width:200px;"}));
+			return popover;
 		},
 		_outArea:function(area){
 			var me=this;
@@ -306,6 +327,9 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 
 			});
 
+			var popover=popoverByArea(area);
+			popover.setText(new Element('span', {html:'click to choose <span class="pop-area region">'+region+'</span> as the current region', style:"width:200px;"}));
+			popover.show();
 			detail.innerHTML=region;
 
 		},
@@ -431,8 +455,9 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 	var mapselector=new PaddlingAreasSelection(regionsData, map, kmlUrl);
 
 
-
-	
+ 
+	// this is to help parent window access the iframe as though it was
+	// a javascript class
 	
 	window.Outlets={
 

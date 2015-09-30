@@ -41,7 +41,7 @@ class AjaxRequest {
         
         $data = AttributesRecord::Get($item->getId(), 'marker', GeoliveHelper::AttributeTableMetadata());
         
-        if ($data['tentSites'] == 'unknown') {
+        if (trim(strtolower($data['tentSites'])) == 'unknown') {
             $data['tentSites'] = '?';
         }
         

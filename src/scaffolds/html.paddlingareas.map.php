@@ -12,6 +12,21 @@
 <script type="text/javascript"
 	src="<?php echo UrlFrom(Core::ViewerDir().DS.'SimpleKml.js');?>">
     </script>
+
+<script
+	src="http://s3-us-west-2.amazonaws.com/nickolanackbucket/popover/Popover.js"
+	type="text/javascript"></script>
+<link rel="stylesheet"
+	href="http://s3-us-west-2.amazonaws.com/nickolanackbucket/popover/popover.css"
+	type="text/css" />
+<script
+	src="<?php echo UrlFrom(Core::AdminDir().'/js/Controls/UIPopover.js'); ?>"
+	type="text/javascript"></script>
+<script
+	src="<?php echo UrlFrom(Core::AdminDir().'/js/Controls/UIMapPopover.js'); ?>"
+	type="text/javascript"></script>
+<script src="<?php echo UrlFrom(Core::AdminDir()); ?>/js/JSUtilities.js"
+	type="text/javascript"></script>
 <script
 	src="<?php echo UrlFrom(Core::AdminDir().'/js/Ajax/AjaxControlQuery.js'); ?>"
 	type="text/javascript"></script>
@@ -53,6 +68,19 @@ button.btn.btn-danger {
 	color: white;
 	font-size: 15px;
 	cursor: pointer;
+}
+
+.UIMapPopover .tip-text {
+	width: 150px;
+	font-weight: 500;
+}
+
+.UIMapPopover .pop-area {
+	color: cornflowerblue;
+}
+
+.UIMapPopover .pop-area.remove {
+	color: crimson;
 }
 </style>
 </head>

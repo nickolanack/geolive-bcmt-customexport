@@ -1,6 +1,10 @@
 
 
 function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
+	
+	
+	$$('#rt-main .rt-grid-9')[0].removeClass('rt-grid-9').addClass('rt-grid-12');
+	$$('#rt-main .rt-grid-3')[0].setStyle('display','none');
 
 
 	var iframe=document.getElementById('mapFrame');
@@ -70,6 +74,15 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
 		return Array.prototype.slice.call(document.getElementsByClassName("site-ckbx"), 0);
 	}
 
+	
+	/**
+	 * Queries for the list of site data objects (containing id, html, attributes, and details)
+	 * the server has been configured to return full site objects for the first 25 sites 
+	 * and simplified objects for the rest. detailed objects for the sites beyond 25 are then 
+	 * queired so that the quieries are staggered
+	 * 
+	 * @see displaySitePreviewElement
+	 */
 	function displaySelectedSites(){
 
 		paSubmitFooter.style.visibility="visible";
@@ -94,13 +107,21 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
 
 		(new JsonQuery('list_sites', json)).addEvent('success',function(result){
 			sitePreviewArea.innerHTML='';
+			
+			var drawHeader=25
+			var i=0;
+			
 			if(result.success){
 
 				var sitesWithoutHtml=[];
 				result.sites.forEach(function(site){
 
 					if(site.html){
+						if(i%drawHeader==0){
+							displaySitePreviewHeaderElement(site);
+						}
 						displaySitePreviewElement(site);
+						i++;
 					}else{
 						sitesWithoutHtml.push(site.id);
 					}
@@ -120,7 +141,12 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
 							result.sites.forEach(function(site){
 
 								if(site.html){
+									
+									if(i%drawHeader==0){
+										displaySitePreviewHeaderElement(site);
+									}
 									displaySitePreviewElement(site);
+									i++;
 								}
 
 							});
@@ -221,7 +247,14 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
 
 
 
+	/**
+	 * Displays a single article card or table row (these are the same thing with css style differences)
+	 * a site object currently has the format {id:int, html:string, attributes:object, details:object}
+	 * details contains icon, coordinates, attributes contain all geolive field attribute values
+	 */
 	function displaySitePreviewElement(site){
+		
+
 
 		var siteArticle=new Element('div', {'id':'site-'+site.id, 'class':'selected'});
 		siteArticle.innerHTML=site.html;
@@ -250,17 +283,38 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
 		var attributesEl=new Element('ul');
 		Object.keys(site.attributes).forEach(function(name){
 			value=site.attributes[name];
-			attributesEl.appendChild(new Element('li',{html:value, 'data-field':name, 'class':'atr-'+name}));
+			attributesEl.appendChild(new Element('li',{html:value, title:value, 'data-field':name, 'class':'atr-'+name}));
 		});
 		attributesEl.appendChild(new Element('li',{html:site.details.coordinates.slice(0,2).map(function(coord){
 			return Math.round(coord*1000)/1000.0;
 			
 		}).join(', '), 'data-field':'coordinates', 'class':'atr-coordinates'}));
-		attributesEl.appendChild(new Element('li',{html:'<img src="'+site.details.icon+'"/>', 'data-field':'icon', 'class':'atr-icon'}));
+		attributesEl.appendChild(new Element('li',{html:'<img title="'+site.details.layer+'" src="'+site.details.icon+'"/>', 'data-field':'icon', 'class':'atr-icon'}));
 
 		siteArticle.appendChild(attributesEl);
+		return siteArticle;
 	}
+	
+	function displaySitePreviewHeaderElement(site){
+		
+		var siteArticle=new Element('div', {'class':'tbl-hr'});
+		siteArticle.innerHTML='<article><header><h1>Site Name</h1></header></article>';
 
+
+		sitePreviewArea.appendChild(siteArticle);
+
+		var attributesEl=new Element('ul');
+		Object.keys(site.attributes).forEach(function(name){
+			attributesEl.appendChild(new Element('li',{html:name.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); }), 'data-field':name, 'class':'atr-'+name}));
+		});
+		attributesEl.appendChild(new Element('li',{html:'Coordinates (lat, lng)', 'data-field':'coordinates', 'class':'atr-coordinates'}));
+		attributesEl.appendChild(new Element('li',{html:'', 'data-field':'icon', 'class':'atr-icon'}));
+
+		siteArticle.appendChild(attributesEl);
+		return siteArticle;
+		
+		
+	}
 
 	function displayPaddlingAreas()
 	{
@@ -423,14 +477,11 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
 		tableView.addClass('btn-primary');
 		gridView.removeClass('btn-primary');
 
-
 		tableView.addClass('active');
 		gridView.removeClass('active');
 
-
 		tableView.firstChild.src=tableView.firstChild.src.split('?')[0]+'?tint=rgba(255,255,255)';
 		gridView.firstChild.src=gridView.firstChild.src.split('?')[0]+'?tint=rgb(0, 68, 204)';
-
 
 		sitePreviewArea.addClass('table-view');
 		sitePreviewArea.removeClass('grid-view')

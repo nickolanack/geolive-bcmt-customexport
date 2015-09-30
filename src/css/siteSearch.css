@@ -101,7 +101,7 @@ form#exportForm .info {
 #site_preview.table-view article {
 	display: inline-block;
 	vertical-align: top;
-	width: 100px;
+	width: 150px;
 }
 
 #site_preview.table-view>div {
@@ -162,25 +162,25 @@ form#exportForm .info {
 
 #site_preview.table-view li.atr-siteFunction {
     display: inline-block;
-    width: 85px;
+    width: 100px;
     text-align: left;
 }
 
 #site_preview.table-view li.atr-landingComments {
 	display: inline-block;
-	width: 200px;
+	width: 325px;
 	text-align: left;
 }
 
 #site_preview.table-view li.atr-campComments {
 	display: inline-block;
-	width: 150px;
+	width: 320px;
 	text-align: left;
 }
 
 #site_preview.table-view li.atr-coordinates {
 	display: inline-block;
-	width: 150px;
+	width: 100px;
 	text-align: left;
 }
 
@@ -220,3 +220,89 @@ form#exportForm .info {
 #site_preview.table-view>div:hover{
 	background-color:rgba(0,0,0,0.02);
 }
+
+#site_preview.grid-view .tbl-hr {
+	display:none;
+}
+#site_preview.table-view .tbl-hr {
+    display: block;
+    background-color: whitesmoke;
+}
+
+.tbl-hr li.atr-siteFunction {
+ /* I want to get rid of this!!!*/
+    margin-left: 3px;
+}
+
+
+@media only screen and (max-width: 1199px) and (min-width: 960px){
+#site_preview.table-view article {}
+#site_preview.table-view li.atr-tentSites {}
+#site_preview.table-view li.atr-siteFunction {}
+#site_preview.table-view li.atr-landingComments {
+	    width: 205px;
+}
+#site_preview.table-view li.atr-campComments {
+	    width: 200px;
+}
+#site_preview.table-view li.atr-coordinates {}
+}
+
+@media only screen and (max-width: 959px) and (min-width: 768px) {
+#site_preview.table-view article {
+	width: 100px;
+}
+#site_preview.table-view li.atr-tentSites {}
+#site_preview.table-view li.atr-siteFunction {
+	width: 75px;
+}
+#site_preview.table-view li.atr-landingComments {
+	width: 150px;
+}
+#site_preview.table-view li.atr-campComments {
+	width: 140px;
+}
+#site_preview.table-view li.atr-coordinates {}
+}
+
+@media only screen and (max-width: 767px) and (min-width: 481px){
+#site_preview.table-view article {
+	width: 75px;
+}
+#site_preview.table-view li.atr-tentSites {}
+#site_preview.table-view li.atr-siteFunction {
+	width: 50px;
+}
+#site_preview.table-view li.atr-landingComments {
+	width: 110px;
+}
+#site_preview.table-view li.atr-campComments {
+	width: 53px;
+}
+#site_preview.table-view li.atr-coordinates {
+	display: none;
+}
+}
+
+@media only screen and (max-width: 480px){
+	#site_preview.table-view article {
+	width: 75px;}
+#site_preview.table-view li.atr-tentSites {}
+#site_preview.table-view li.atr-siteFunction {
+	width: 50px;
+}
+#site_preview.table-view li.atr-landingComments {
+	width: 50px;
+}
+#site_preview.table-view li.atr-campComments {
+	width: 32px;;
+}
+#site_preview.table-view li.atr-coordinates {
+	display: none;
+}
+	
+}
+
+
+
+
