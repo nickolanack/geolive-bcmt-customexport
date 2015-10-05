@@ -105,15 +105,16 @@ echo implode(
 		<div>
 			<a id="selectAllSites" onclick="return false" class="btn btn-info">select
 				all</a><a id="removeAllSites" onclick="return false"
-				class="btn btn-info">remove all</a><a id="gridView"
-				class="btn btn-primary active"
+				class="btn btn-info">remove all</a><a id="gridView" class="btn"
 				style="padding: 4px 7px; float: right;"><img
-				src="/administrator/components/com_geolive/assets/Map%20Item%20Icons/xsm_table.png?tint=rgb(255,255,255)"></a><a
-				id="tableView" class="btn" style="padding: 4px 8px; float: right;"><img
-				src="/administrator/components/com_geolive/assets/Map%20Item%20Icons/xsm_list.png?tint=rgb(0, 68, 204)"></a>
+				src="/administrator/components/com_geolive/assets/Map%20Item%20Icons/xsm_table.png?tint=rgb(0, 68, 204)"></a><a
+				id="tableView" class="btn btn-primary active"
+				style="padding: 4px 8px; float: right;"><img
+				src="/administrator/components/com_geolive/assets/Map%20Item%20Icons/xsm_list.png?tint=rgb(255,255,255)"></a>
 		</div>
 	</div>
-	<div id="site_preview" class="grid-view"></div>
+	<!-- there are two views available table-view an grid-view, the css class name below sets the default view -->
+	<div id="site_preview" class="table-view"></div>
 	<br />
 	<div id="paSubmitFooter" style="visibility: hidden;">
 		<a class="btn btn-success" data-out="kml" onclick="return false;">Download

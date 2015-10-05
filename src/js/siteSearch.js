@@ -290,7 +290,23 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery){
 			
 		}).join(', '), 'data-field':'coordinates', 'class':'atr-coordinates'}));
 		attributesEl.appendChild(new Element('li',{html:'<img title="'+site.details.layer+'" src="'+site.details.icon+'"/>', 'data-field':'icon', 'class':'atr-icon'}));
-
+		
+		
+		var sizeElementFor=['landingComments', 'campComments'];
+		
+		sizeElementFor.forEach(function(name){
+			if(site.attributes[name]){
+				var size=[55, 150, 250]
+				var className=['lng-txt', 'xlng-txt', 'xxlng-txt'];
+				var len=site.attributes[name].length;
+				for(var i=size.length-1;i>=0;i--){
+					if(len>=size[i]){
+						siteArticle.addClass(className[i]);
+						break;
+					}
+				}
+			}
+		});
 		siteArticle.appendChild(attributesEl);
 		return siteArticle;
 	}

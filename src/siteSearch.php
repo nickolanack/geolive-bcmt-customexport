@@ -75,22 +75,43 @@ try {
                 
                 if (UrlVar('exportOutput') == 'kml') {
                     
-                    header('Content-Type: application/kmz+zip;');
-                    header('Content-disposition: filename="export.kmz"');
+                    // export kmz file, this requires writing
+                    // to a temprotary file, kmz is a zip file with
+                    // .kmz extensions
+                    
                     $filename = tempnam(__DIR__, 'zip');
                     include_once ('lib/KmlWriter.php');
                     $kmlWriter = new KmlWriter();
-                    $kmlWriter->writeKml($sitesArray);
                     
                     $zip = new ZipArchive();
                     $zip->open($filename);
+                    
+                    // add kml file
+                    
+                    if (count($sitesArray) == 0) {
+                        throw new Exception(
+                            'No sites in site list:' . json_encode($siteList) . ' or paddling areas: ' .
+                                 json_encode($paArray) . '  --  ' . GeoliveHelper::Database()->lastQuery());
+                    }
+                    
                     $zip->addFromString('default.kml', $kmlWriter->writeKml($sitesArray));
                     
+                    // add each icon linked in kml
                     foreach ($kmlWriter->getStyles() as $icon) {
+                        $fileicon = __DIR__ . DS . $icon;
+                        if (!file_exists($fileicon)) {
+                            throw new Exception("unable to find file: " . $fileicon);
+                        }
+                        if (filesize($fileicon) == 0) {
+                            throw new Exception("file appears to be empty: " . $fileicon);
+                        }
                         $zip->addFile(__DIR__ . DS . $icon, $icon);
                     }
+                    
                     $zip->close();
                     
+                    header('Content-Type: application/kmz+zip;');
+                    header('Content-disposition: filename="export.kmz"');
                     readfile($filename);
                     unlink($filename);
                 } else {

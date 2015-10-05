@@ -152,12 +152,13 @@ form#exportForm .info {
 	white-space: nowrap;
 	line-height: 30px;
 	font-size: 12px;
+	box-sizing: border-box;
 	
 }
 
 #site_preview.table-view li.atr-tentSites {
 	display: inline-block;
-	width: 30px;
+	width: 65px;
 }
 
 #site_preview.table-view li.atr-siteFunction {
@@ -168,13 +169,13 @@ form#exportForm .info {
 
 #site_preview.table-view li.atr-landingComments {
 	display: inline-block;
-	width: 325px;
+	width: 333px;
 	text-align: left;
 }
 
 #site_preview.table-view li.atr-campComments {
 	display: inline-block;
-	width: 320px;
+	width: 333px;
 	text-align: left;
 }
 
@@ -231,7 +232,7 @@ form#exportForm .info {
 
 .tbl-hr li.atr-siteFunction {
  /* I want to get rid of this!!!*/
-    margin-left: 3px;
+    margin-left: 2px;
 }
 
 
@@ -240,10 +241,10 @@ form#exportForm .info {
 #site_preview.table-view li.atr-tentSites {}
 #site_preview.table-view li.atr-siteFunction {}
 #site_preview.table-view li.atr-landingComments {
-	    width: 205px;
+	    width: 213px;
 }
 #site_preview.table-view li.atr-campComments {
-	    width: 200px;
+	    width: 213px;
 }
 #site_preview.table-view li.atr-coordinates {}
 }
@@ -254,7 +255,7 @@ form#exportForm .info {
 }
 #site_preview.table-view li.atr-tentSites {}
 #site_preview.table-view li.atr-siteFunction {
-	width: 75px;
+	width: 90px;
 }
 #site_preview.table-view li.atr-landingComments {
 	width: 150px;
@@ -292,7 +293,7 @@ form#exportForm .info {
 	width: 50px;
 }
 #site_preview.table-view li.atr-landingComments {
-	width: 50px;
+	width: 60px;
 }
 #site_preview.table-view li.atr-campComments {
 	width: 32px;;
@@ -304,5 +305,54 @@ form#exportForm .info {
 }
 
 
+
+
+#site_preview.table-view>div.lng-txt {
+    height: 60px;
+}
+
+#site_preview.table-view>div.lng-txt li {
+    height: 60px;
+}
+
+.table-view>div.lng-txt header>h1, body.layout-mode-responsive .table-view>div.lng-txt header>h1 {
+    height: 60px;
+}
+
+
+
+
+
+#site_preview.table-view>div.xlng-txt {
+    height: 95px;
+}
+
+#site_preview.table-view>div.xlng-txt li {
+    height: 95px;
+}
+
+.table-view>div.xlng-txt header>h1, body.layout-mode-responsive .table-view>div.xlng-txt header>h1 {
+    height: 95px;
+}
+
+
+#site_preview.table-view>div.xxlng-txt {
+    height: 112px;
+}
+
+#site_preview.table-view>div.xxlng-txt li {
+    height: 112px;
+}
+
+.table-view>div.xxlng-txt header>h1, body.layout-mode-responsive .table-view>div.xxlng-txt header>h1 {
+    height: 112px;
+}
+
+#site_preview.table-view>div.lng-txt li, #site_preview.table-view>div.xlng-txt li, #site_preview.table-view>div.xxlng-txt li {
+    text-overflow: initial;
+    white-space: normal;
+    line-height: 17px;
+    padding-top: 6px;
+}
 
 
