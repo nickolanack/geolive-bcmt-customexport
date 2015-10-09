@@ -89,12 +89,12 @@ echo implode(
 	</div>
 
 	<div id="paSubmit" style="">
-		<a id="exportToKml" class="btn" data-out="kml" onclick="return false;"
-			disabled="true">Download results to Google Earth</a> <a
-			id="exportToGpx" class="btn" data-out="gpx" onclick="return false;"
-			disabled="true">Download results for your GPS</a> <a id="exportToGpx"
-			class="btn" data-out="preview" onclick="return false;"
-			disabled="true">Preview Sites</a><span id="siteCount"></span>
+		<a id="" class="btn" data-out="preview" onclick="return false;"
+			disabled="true">Preview Sites</a><a id="exportToKml" class="btn"
+			data-out="kml" onclick="return false;" disabled="true">Download
+			results to Google Earth</a> <a id="exportToGpx" class="btn"
+			data-out="gpx" onclick="return false;" disabled="true">Download
+			results for your GPS</a> <span id="siteCount"></span>
 	</div>
 	<br />
 	<div id="sitePreviewHeader" style="visibility: hidden;">

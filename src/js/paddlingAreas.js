@@ -84,7 +84,10 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 	var clear=new Element('button', {'class':'btn btn-danger',html:'reset'});
 	var selectedRegion=false;
 	
-	
+	var polyColor='#006dcc';
+	var polySelectedColor='#51a351';
+	var polyHighlightColor='#55ACEE'
+		
 	
 
 	var PaddlingAreasSelection=new Class({
@@ -126,8 +129,8 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 												});
 												return paths;
 											})(),
-											fillColor:'#000000',
-											fillOpacity:0.5,
+											fillColor:polyColor,
+											fillOpacity:0.7,
 											strokeColor:'#000000',
 											strokeWeight:1,
 											strokeOpacity:0.7
@@ -222,7 +225,7 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 			}
 			
 			var polygon=polysByArea[area];
-			polygon.setOptions({fillColor:'#5AB55A'})
+			polygon.setOptions({fillColor:polySelectedColor})
 			
 		},
 		
@@ -233,7 +236,7 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 				me._selectedAreas.splice(i,1);
 			}
 			var polygon=polysByArea[area];
-			polygon.setOptions({fillColor:'#000000'})
+			polygon.setOptions({fillColor:polyColor})
 		},
 		
 		_toggleSelectedArea:function(area){
@@ -253,7 +256,7 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 				//setTimeout(function(){
 					//let it go dark briefly... 
 					var polygon=polysByArea[area];
-					polygon.setOptions({fillColor:'#55acee'});
+					polygon.setOptions({fillColor:polyHighlightColor});
 				//},250)
 					
 				me._setAreaPoverTextSelectable(area);
@@ -277,7 +280,7 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 				me._setAreaPoverTextRemoveable(area).show();	
 			}else{
 				
-				polygon.setOptions({fillColor:'#55acee'})
+				polygon.setOptions({fillColor:polyHighlightColor})
 				me._setAreaPoverTextSelectable(area).show();			
 			}
 			detail.innerHTML=selectedRegion+' - '+area;
@@ -309,7 +312,7 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 				
 			}else{
 				var polygon=polysByArea[area];
-				polygon.setOptions({fillColor:'#000000'});	
+				polygon.setOptions({fillColor:polyColor});	
 			}
 			detail.innerHTML=selectedRegion;
 			
@@ -323,7 +326,7 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 				clearTimeout(me.mRegionTimeout);
 			}
 			polysWithRegion(region).forEach(function(polygon){
-				polygon.setOptions({fillColor:'#55acee'})
+				polygon.setOptions({fillColor:polyHighlightColor})
 
 			});
 
@@ -342,7 +345,7 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 			me.mRegionTimeout=setTimeout(function(){
 
 				polysWithRegion(region).forEach(function(polygon){
-					polygon.setOptions({fillColor:'#000000'})
+					polygon.setOptions({fillColor:polyColor})
 				});
 
 			},150);
@@ -365,7 +368,7 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 			detail.innerHTML=region;
 			polysWithRegion(region).forEach(function(polygon){
 				polygon.setVisible(true);
-				polygon.setOptions({fillColor:'#000000', strokeOpacity:0.7});
+				polygon.setOptions({fillColor:polyColor, strokeOpacity:0.7});
 			
 			});
 
@@ -385,7 +388,7 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl){
 			}
 			Object.keys(polysByArea).forEach(function(name){
 				polygon=polysByArea[name];
-				polygon.setOptions({fillColor:'#000000', strokeOpacity:0.7});
+				polygon.setOptions({fillColor:polyColor, strokeOpacity:0.7});
 				polygon.setVisible(true);
 			});
 			me.fireEvent('reset');

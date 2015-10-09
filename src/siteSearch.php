@@ -111,13 +111,14 @@ try {
                     $zip->close();
                     
                     header('Content-Type: application/kmz+zip;');
-                    header('Content-disposition: filename="export.kmz"');
+                    
+                    header('Content-disposition: filename="bcmtn-export-kmz-' . date('Y-m-d') . '.kmz"');
                     readfile($filename);
                     unlink($filename);
                 } else {
                     
                     header('Content-Type: application/gpx+xml;');
-                    header('Content-disposition: filename="export.gpx"');
+                    header('Content-disposition: filename="bcmtn-export-gpx-' . date('Y-m-d') . '.gpx"');
                     include_once ('lib/GpxWriter.php');
                     $gpxWriter = new GpxWriter();
                     echo $gpxWriter->writeGpx($sitesArray);
@@ -219,8 +220,8 @@ try {
             ), // route the downloads/ajax directly to this file - outside of joomla.
 __DIR__ . DS . 'scaffolds');
         
-        if (Core::Client()->isAdmin()) {
-            
+        if (false && Core::Client()->isAdmin()) {
+            // disabled
             // link to test for admin
             
             ?><a href="<?php echo UrlFrom(__FILE__); ?>?task=unit_test">run
