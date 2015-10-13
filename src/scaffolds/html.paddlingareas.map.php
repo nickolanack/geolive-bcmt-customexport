@@ -1,23 +1,23 @@
 <html>
 <head>
 <script
-	src="http://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools-core.js"
+	src="https://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools-core.js"
 	type="text/javascript"></script>
 <script
-	src="http://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools-more.js"
+	src="https://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools-more.js"
 	type="text/javascript"></script>
 <script
-	src="http://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools_compat.js"
+	src="https://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools_compat.js"
 	type="text/javascript"></script>
 <script type="text/javascript"
-	src="<?php echo UrlFrom(Core::ViewerDir().DS.'SimpleKml.js');?>">
+	src="<?php echo UrlFrom(Core::LoadPlugin('Maps')->getPath().DS.'js'.DS.'SimpleKml.js');?>">
     </script>
 
 <script
-	src="http://s3-us-west-2.amazonaws.com/nickolanackbucket/popover/Popover.js"
+	src="https://s3-us-west-2.amazonaws.com/nickolanackbucket/popover/Popover.js"
 	type="text/javascript"></script>
 <link rel="stylesheet"
-	href="http://s3-us-west-2.amazonaws.com/nickolanackbucket/popover/popover.css"
+	href="https://s3-us-west-2.amazonaws.com/nickolanackbucket/popover/popover.css"
 	type="text/css" />
 <script
 	src="<?php echo UrlFrom(Core::AdminDir().'/js/Controls/UIPopover.js'); ?>"
