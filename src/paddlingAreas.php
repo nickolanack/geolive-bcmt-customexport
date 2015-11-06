@@ -1,7 +1,7 @@
 <?php
 
 /**
- *
+ * This is the access point for displaying the map, paddlingArea, selection tool
  */
 try {
     
