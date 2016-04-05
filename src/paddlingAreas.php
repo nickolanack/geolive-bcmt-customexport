@@ -5,7 +5,7 @@
  */
 try {
     
-    include_once ('lib/GeoliveHelper.php');
+    include_once (__DIR__.'/lib/GeoliveHelper.php');
     
     error_reporting(E_ALL ^ E_NOTICE); // report everything except notices
     ini_set('display_errors', 1);
