@@ -1,0 +1,11 @@
+{
+	"repositories": [{
+			"type": "git",
+			"url": "https://github.com/nickolanack/geolive-bcmt-customexport.git"
+		}
+
+	],
+	"require": {
+		"nickolanack/bcmt-sitesearch": "dev-master"
+	}
+}

@@ -1,11 +1,16 @@
 {
-    "name": "nickolanack/bcmt-sitesearch",
-    "description": "bc-marine-trails search tool",
-    "license": "proprietary",
-    "authors": [{
-        "name": "Nick Blackwell",
-        "email": "nickblackwell82@gmail.com"
-    }],
-    "minimum-stability": "stable",
-    "require": {}
+	"name": "nickolanack/bcmt-sitesearch",
+	"description": "bc-marine-trails search tool",
+	"license": "proprietary",
+	"authors": [{
+		"name": "Nick Blackwell",
+		"email": "nickblackwell82@gmail.com"
+	}],
+	"minimum-stability": "stable",
+	"post-install-cmd": [
+		php install.php
+	],
+	"post-update-cmd": [
+		php install.php
+	]
 }
