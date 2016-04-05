@@ -10,7 +10,11 @@
 	src="https://s3-us-west-2.amazonaws.com/nickolanackbucket/mootools/mootools_compat.js"
 	type="text/javascript"></script>
 <script type="text/javascript"
-	src="<?php echo UrlFrom(Core::LoadPlugin('Maps')->getPath().DS.'js'.DS.'SimpleKml.js');?>">
+	src="<?php
+
+echo UrlFrom(dirname(__DIR__) . DS . 'bower_components' . DS . 'js-simplekml' . DS . 'KmlReader.js');
+
+?>">
     </script>
 
 <script
@@ -20,19 +24,19 @@
 	href="https://s3-us-west-2.amazonaws.com/nickolanackbucket/popover/popover.css"
 	type="text/css" />
 <script
-	src="<?php echo UrlFrom(Core::AdminDir().'/js/Controls/UIPopover.js'); ?>"
+	src="<?php echo UrlFrom(Core::AdminDir() . '/js/Controls/UIPopover.js'); ?>"
 	type="text/javascript"></script>
 <script
-	src="<?php echo UrlFrom(Core::AdminDir().'/js/Controls/UIMapPopover.js'); ?>"
+	src="<?php echo UrlFrom(Core::AdminDir() . '/js/Controls/UIMapPopover.js'); ?>"
 	type="text/javascript"></script>
 <script src="<?php echo UrlFrom(Core::AdminDir()); ?>/js/JSUtilities.js"
 	type="text/javascript"></script>
 <script
-	src="<?php echo UrlFrom(Core::AdminDir().'/js/Ajax/AjaxControlQuery.js'); ?>"
+	src="<?php echo UrlFrom(Core::AdminDir() . '/js/Ajax/AjaxControlQuery.js'); ?>"
 	type="text/javascript"></script>
 
 <script
-	src="<?php echo UrlFrom(dirname(__DIR__).'/js/paddlingAreas.js'); ?>"
+	src="<?php echo UrlFrom(dirname(__DIR__) . '/js/paddlingAreas.js'); ?>"
 	type="text/javascript"></script>
 <style>
 #map {
