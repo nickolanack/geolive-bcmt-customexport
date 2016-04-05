@@ -1,2 +1,4 @@
 <?php
-touch(__DIR__.'/test.txt');
+
+chdir(__DIR__);
+system('bower update');
