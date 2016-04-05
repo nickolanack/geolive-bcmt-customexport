@@ -21,7 +21,7 @@ $config = array_merge(array(
 	type="text/javascript"></script>
 <script type="text/javascript">
 window.addEventListener("load", function(){
-	PaddlingRegionSearchBehavior(
+	PaddlingRegionMapSearchBehavior(
  <?php echo json_encode($config['regions'], JSON_PRETTY_PRINT); ?>, <?php echo json_encode($config['layers'], JSON_PRETTY_PRINT); ?>, (new Class({
 	    Extends:AjaxControlQuery,
 	    initialize:function(task, json){
