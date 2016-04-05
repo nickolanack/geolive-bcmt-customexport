@@ -13,8 +13,22 @@ class GeoliveHelper {
 
         if (!self::$isLoaded) {
             
-            include_once dirname(dirname(__DIR__)) . DS . 'administrator' . DS . 'components' . DS . 'com_geolive' . DS .
+
+            $root=__DIR__;
+            while($root!=='/'&&!file_exists($root.DS.'configuration.php')){
+                //recurse back to site root.
+                $root=dirname($root);
+            }
+
+            //check for geolive core include.
+            $core=$root. DS . 'administrator' . DS . 'components' . DS . 'com_geolive' . DS .
                  'core.php';
+
+            if(!file_exists($core)){
+                throw new Exception('Unable to load Geolive Framework');
+            }
+
+            include_once $core; 
             
             Core::Parameters()->disableCaching();
             Core::Parameters()->disableCompression();
