@@ -12,7 +12,7 @@
 <script type="text/javascript"
 	src="<?php
 
-echo UrlFrom(dirname(__DIR__) . DS . 'bower_components' . DS . 'js-simplekml' . DS . 'KmlReader.js');
+echo UrlFrom(dirname(dirname(__DIR__)) . DS . 'bower_components' . DS . 'js-simplekml' . DS . 'KmlReader.js');
 
 ?>">
     </script>
