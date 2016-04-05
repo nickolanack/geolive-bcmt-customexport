@@ -1,0 +1,5 @@
+ {
+ 	"dependencies": {
+ 		"js-simplekml": "https://github.com/nickolanack/js-simplekml.git"
+ 	}
+ }

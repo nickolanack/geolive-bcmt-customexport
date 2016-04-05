@@ -7,10 +7,5 @@
 		"email": "nickblackwell82@gmail.com"
 	}],
 	"minimum-stability": "stable",
-	"post-install-cmd": [
-		"php install.php"
-	],
-	"post-update-cmd": [
-		"php install.php"
-	]
+
 }
