@@ -8,9 +8,9 @@
 	}],
 	"minimum-stability": "stable",
 	"post-install-cmd": [
-		php install.php
+		"php install.php"
 	],
 	"post-update-cmd": [
-		php install.php
+		"php install.php"
 	]
 }
