@@ -1,2 +1,2 @@
 <?php
-echo 'Hello world';
+touch(__DIR__.'/test.txt');
