@@ -15,13 +15,11 @@ $config = array_merge(array(
 	src="<?php echo UrlFrom(Core::AdminDir() . '/js/Ajax/AjaxControlQuery.js'); ?>"
 	type="text/javascript"></script>
 <link rel="stylesheet" href="ext/css/siteSearch.css" type="text/css">
-<script src="ext/js/siteSearch.js" type="text/javascript"></script>
-<script
-	src="<?php echo UrlFrom(dirname(__DIR__) . '/js/paddlingAreas.js'); ?>"
-	type="text/javascript"></script>
+<script src="<?php echo UrlFrom(dirname(__DIR__) . '/js/siteSearch.js'); ?>" type="text/javascript"></script>
+
 <script type="text/javascript">
 window.addEventListener("load", function(){
-	PaddlingRegionMapSearchBehavior(
+	PaddlingRegionSearchBehavior(
  <?php echo json_encode($config['regions'], JSON_PRETTY_PRINT); ?>, <?php echo json_encode($config['layers'], JSON_PRETTY_PRINT); ?>, (new Class({
 	    Extends:AjaxControlQuery,
 	    initialize:function(task, json){
