@@ -1,0 +1,4 @@
+{
+	"update":"php install.php",
+	"test":"phpunit src/test/UtilTest --verbose"
+}
