@@ -1,0 +1,9 @@
+<phpunit backupGlobals="false" backupStaticAttributes="false"
+	strict="true" verbose="true">
+
+	<testsuites>
+	  <testsuite name="BCMT Site Search Test">
+	    <directory suffix="Test.php">src/test</directory>
+	  </testsuite>
+	</testsuites>
+</phpunit>
