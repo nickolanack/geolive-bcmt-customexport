@@ -12,11 +12,11 @@ class SitesTest extends PHPUnit_Framework_TestCase
     	include_once dirname(__DIR__).'/lib/AjaxRequest.php';
 
 
-    	$args=json_decode('{"paddlingAreas":["Douglas Gardner"],"layers":"*","region":"North Coast"}');
+    	
 
-    	$c=GeoliveHelper::CountSitesInAreas(array("Douglas Gardner"));
-
-    	$this->markTestIncomplete('Count: '.$c);
+    	$c=GeoliveHelper::CountSitesInAreas(array("Douglas Gardner"), array('public', 'special', 'site-planning'));
+    	$this->assertEquals(22, $c);
+    	
 
 	}
 }

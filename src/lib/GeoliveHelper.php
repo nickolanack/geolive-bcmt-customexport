@@ -111,15 +111,20 @@ class GeoliveHelper
     }
     private static $visibleLayers;
 
-    public static function VisibleLayers()
+    public static function VisibleLayers($accessGroups=null)
     {
+
+        if(is_null($accessGroups)){
+            $accessGroups=Core::Client()->getAccessGroups();
+        }
+
 
         if (is_null(self::$visibleLayers)) {
 
             $readAccessFilter = array(
                 'readAccess' => array(
                     'comparator' => 'IN',
-                    'value' => '(\'' . implode('\', \'', Core::Client()->getAccessGroups()) . '\')',
+                    'value' => '(\'' . implode('\', \'', $accessGroups) . '\')',
                     'qoutes' => false,
                 ),
             );
@@ -258,8 +263,12 @@ class GeoliveHelper
         self::Database()->iterate($query, $iteratorCallback);
     }
 
-    public static function CountSitesInAreas($areas)
+    public static function CountSitesInAreas($areas, $accessGroups=null)
     {
+
+        if(is_null($accessGroups)){
+            $accessGroups=Core::Client()->getAccessGroups();
+        }
 
         $filter = json_decode(
             '{
@@ -277,11 +286,11 @@ class GeoliveHelper
         // print_r($filter);
 
         $query = 'Select count(*) as count FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() .
-        ' WHERE readAccess IN (\'' . implode('\', \'', Core::Client()->getAccessGroups()) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
+        ' WHERE readAccess IN (\'' . implode('\', \'', $accessGroups) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
             $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ',
             array_map(function ($layer) {
                 return $layer->getId();
-            }, self::VisibleLayers())) . ')';
+            }, self::VisibleLayers($accessGroups))) . ')';
 
         return self::Database()->query($query)[0]->count;
     }
