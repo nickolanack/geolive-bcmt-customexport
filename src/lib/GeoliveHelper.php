@@ -295,21 +295,25 @@ class GeoliveHelper
         return self::Database()->query($query)[0]->count;
     }
 
-    public static function QueriedSiteListInAreas($areas, $iteratorCallback)
+    public static function QueriedSiteListInAreas($areas, $iteratorCallback, $accessGroups=null)
     {
+
+        if(is_null($accessGroups)){
+            $accessGroups=Core::Client()->getAccessGroups();
+        }
 
         $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
         " m on a.mapitem = m.id WHERE m.lid IN (" . implode(', ',
             array_map(
                 function ($layer) {
                     return $layer->getId();
-                }, self::VisibleLayers())) . ")";
+                }, self::VisibleLayers($accessGroups))) . ")";
 
         $paWhere = 'AND (' . implode(' OR ',
             array_map(
                 function ($pa) {
-                    return 'lower(trim(a.paddlingArea)) LIKE \'%' . GeoliveHelper::Database()->escape($pa) .
-                        '%\'';
+                    return 'lower(trim(a.paddlingArea)) = lower(trim(\'' . GeoliveHelper::Database()->escape($pa) .
+                        '\'))';
                 }, $areas)) . ')';
         $query = "SELECT * $from $paWhere order by m.name";
 
@@ -333,8 +337,8 @@ class GeoliveHelper
         $paWhere = 'AND (' . implode(' OR ',
             array_map(
                 function ($pa) {
-                    return 'lower(trim(a.paddlingArea)) LIKE \'%' .
-                    GeoliveHelper::Database()->escape($pa) . '%\'';
+                    return 'lower(trim(a.paddlingArea))  = lower(trim(\''.
+                    GeoliveHelper::Database()->escape($pa) . '\'))';
                 }, $areas)) . ')';
         $query = "SELECT * $from $paWhere order by m.name";
 
