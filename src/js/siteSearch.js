@@ -553,10 +553,16 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery) {
     });
 
 
+    var getOutlets=function(){
+
+        return (mapFrame.Outlets||mapFrame.contentWindow.Outlets||false)
+
+    }
+
     var attachIframeListener = function() {
 
 
-        mapFrame.contentWindow.Outlets.onChange(function(mapselector) {
+        getOutlets().onChange(function(mapselector) {
 
             var region = mapselector.getRegion();
             if (region === null) {
@@ -611,7 +617,7 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery) {
 
     };
 
-    if (mapFrame.contentWindow.Outlets) {
+    if (getOutlets()) {
         attachIframeListener();
     } else {
         mapFrame.addEvent('load', function() {
