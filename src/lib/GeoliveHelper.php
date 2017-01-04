@@ -115,7 +115,7 @@ class GeoliveHelper
     {
 
         if(is_null($accessGroups)){
-            $accessGroups=Core::Client()->getAccessGroups();
+            $accessGroups=Core::Client()->getUsersAccessGroups();
         }
 
 
@@ -254,7 +254,7 @@ class GeoliveHelper
         // print_r($filter);
 
         $query = 'Select m.id as id, m.name as name FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() .
-        ' WHERE readAccess IN (\'' . implode('\', \'', Core::Client()->getAccessGroups()) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
+        ' WHERE readAccess IN (\'' . implode('\', \'', Core::Client()->getUsersAccessGroups()) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
             $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ',
             array_map(function ($layer) {
                 return $layer->getId();
@@ -267,7 +267,7 @@ class GeoliveHelper
     {
 
         if(is_null($accessGroups)){
-            $accessGroups=Core::Client()->getAccessGroups();
+            $accessGroups=Core::Client()->getUsersAccessGroups();
         }
 
         $filter = json_decode(
@@ -299,7 +299,7 @@ class GeoliveHelper
     {
 
         if(is_null($accessGroups)){
-            $accessGroups=Core::Client()->getAccessGroups();
+            $accessGroups=Core::Client()->getUsersAccessGroups();
         }
 
         $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
