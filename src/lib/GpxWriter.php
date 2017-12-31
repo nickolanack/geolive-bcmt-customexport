@@ -66,7 +66,10 @@ class GpxWriter {
              $tentSites = str_replace('unknown', "?", $tentSites);
 
 
-            $descText=$site['siteFunction'] . "\n\n" . "Landing Comments: ".$site['landingComments'] . "\n\n" . "Camp Comments: ".$site['campComments']."\n\n".'Tent Sites: '.  $tentSites."\n\n".'Other Comments: '.  $site['otherComments']  ;
+            $descText=$site['siteFunction'] . "\n\n" . "Landing Comments: ".$site['landingComments'] . "\n\n" . "Camp Comments: ".$site['campComments']."\n\n".'Tent Sites: '.  $tentSites."\n\n".'Other Comments: '.  $site['otherComments'];
+
+            $descText=$this->filterLinkTags($descText);
+
             $descNode = $this->dom->createElement('desc', 
                 htmlspecialchars($descText));
             $wptDescNode = $waypointNode->appendChild($descNode);
@@ -76,6 +79,31 @@ class GpxWriter {
         }
         
         return $this->dom->saveXML();
+    }
+
+    protected function filterLinkTags($htmlBlock)
+    {
+        preg_match_all('/<a(.*?)<\/a>/i', $htmlBlock, $results);
+
+        if(count($results[0])<1){
+            return $htmlBlock;
+        }
+      
+
+        preg_match_all('/href[^\'"]+[\'"]([^\'"]+)[\'"]/', implode('', $results[0]), $links);
+
+        if(empty($links[1])){
+            return array();
+        }
+        foreach($results[0] as $i=>$linkTag){
+
+
+            $htmlBlock=str_replace($linkTag, implode(' - ',  array_filter(array(strip_tags($linkTag), $links[1][$i]), function($t){
+                return ($t&&trim($t)!=="");
+            })), $htmlBlock);
+        }
+
+        return $htmlBlock;
     }
 }
 
