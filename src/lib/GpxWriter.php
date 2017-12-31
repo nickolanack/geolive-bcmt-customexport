@@ -61,7 +61,12 @@ class GpxWriter {
              * Camp Comments e.g. continue blah blah - different receivers will truncate at different points and it is
              * best just to keep adding text as in the KML file.
              */
-            $descText=$site['siteFunction'] . ' - ' . $site['landingComments'] . ' - ' . $site['campComments'];
+           
+             $tentSites = trim(strtolower((empty($site['tentSites'])?"?":$site['tentSites']).""));
+             $tentSites = str_replace('unknown', "?", $tentSites);
+
+
+            $descText=$site['siteFunction'] . "\n\n" . "Landing Comments: ".$site['landingComments'] . "\n\n" . "Camp Comments: ".$site['campComments']."\n\n".'Tent Sites: '.  $tentSites."\n\n".'Other Comments: '.  $site['otherComments']  ;
             $descNode = $this->dom->createElement('desc', 
                 htmlspecialchars($descText));
             $wptDescNode = $waypointNode->appendChild($descNode);
