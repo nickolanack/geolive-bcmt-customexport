@@ -1,0 +1,290 @@
+[
+    {
+        "rgName": "Central Coast",
+        "image": "central-coast-paddling-areas.jpg",
+        "areas": [
+            {
+                "paName": "Bella Bella",
+                "selected": false
+            },
+            {
+                "paName": "Bella Coola",
+                "selected": false
+            },
+            {
+                "paName": "Calvert Hakai",
+                "selected": false
+            },
+            {
+                "paName": "Cape Caution",
+                "selected": false
+            },
+            {
+                "paName": "Fitz Hugh Sound",
+                "selected": false
+            },
+            {
+                "paName": "Milbanke Sound",
+                "selected": false
+            },
+            {
+                "paName": "Ocean Falls",
+                "selected": false
+            },
+            {
+                "paName": "Queens Sound",
+                "selected": false
+            },
+            {
+                "paName": "Smith Sound",
+                "selected": false
+            },
+            {
+                "paName": "Spiller Roscoe",
+                "selected": false
+            }
+        ]
+    },
+    {
+        "rgName": "Discoveries & Mid Coast",
+        "image": "discovery-desolation-paddling-areas.jpg",
+        "areas": [
+            {
+                "paName": "Queen Charlotte Strait",
+                "selected": false
+            },
+            {
+                "paName": "Broughton Tribune",
+                "selected": false
+            },
+            {
+                "paName": "Bute Inlet",
+                "selected": false
+            },
+            {
+                "paName": "Cordero Channel",
+                "selected": false
+            },
+            {
+                "paName": "Discovery Islands",
+                "selected": false
+            },
+            {
+                "paName": "Johnstone Strait",
+                "selected": false
+            },
+            {
+                "paName": "Knight Inlet",
+                "selected": false
+            },
+            {
+                "paName": "Loughborough Inlet",
+                "selected": false
+            },
+            {
+                "paName": "Seymour",
+                "selected": false
+            }
+        ]
+    },
+    {
+        "rgName": "Haida Gwaii",
+        "image": "haida-gwaii-paddling-areas.jpg",
+        "areas": [
+            {
+                "paName": "E Graham",
+                "selected": false
+            },
+            {
+                "paName": "E Moresby",
+                "selected": false
+            },
+            {
+                "paName": "Kunghit",
+                "selected": false
+            },
+            {
+                "paName": "Masset Sd",
+                "selected": false
+            },
+            {
+                "paName": "N Graham",
+                "selected": false
+            },
+            {
+                "paName": "Skidegate Channel",
+                "selected": false
+            },
+            {
+                "paName": "W Graham",
+                "selected": false
+            },
+            {
+                "paName": "West Moresby",
+                "selected": false
+            }
+        ]
+    },
+    {
+        "rgName": "North Coast",
+        "image": "north-coast-paddling-areas.jpg",
+        "areas": [
+            {
+                "paName": "Chatham Sound",
+                "selected": false
+            },
+            {
+                "paName": "Dixon Entrance",
+                "selected": false
+            },
+            {
+                "paName": "Douglas Gardner",
+                "selected": false
+            },
+            {
+                "paName": "Gil Campania",
+                "selected": false
+            },
+            {
+                "paName": "Grenville",
+                "selected": false
+            },
+            {
+                "paName": "Hecate Strait",
+                "selected": false
+            },
+            {
+                "paName": "Klemtu",
+                "selected": false
+            },
+            {
+                "paName": "Laredo",
+                "selected": false
+            },
+            {
+                "paName": "Nass Portland",
+                "selected": false
+            },
+            {
+                "paName": "Petrel Principe",
+                "selected": false
+            },
+            {
+                "paName": "Porcher",
+                "selected": false
+            },
+            {
+                "paName": "Princess Royal",
+                "selected": false
+            }
+        ]
+    },
+    {
+        "rgName": "South Coast Mainland",
+        "image": "south-mainland-paddling-areas.jpg",
+        "areas": [
+            {
+                "paName": "Burrard Inlet",
+                "selected": false
+            },
+            {
+                "paName": "Desolation Toba",
+                "selected": false
+            },
+            {
+                "paName": "Fraser\/Pitt",
+                "selected": false
+            },
+            {
+                "paName": "Howe Sound",
+                "selected": false
+            },
+            {
+                "paName": "Jervis Inlet",
+                "selected": false
+            },
+            {
+                "paName": "Sechelt Inlet",
+                "selected": false
+            },
+            {
+                "paName": "Strait Of Georgia North",
+                "selected": false
+            },
+            {
+                "paName": "Strait Of Georgia South",
+                "selected": false
+            }
+        ]
+    },
+    {
+        "rgName": "Vancouver Island",
+        "image": "vancouver-island-paddling-areas.jpg",
+        "areas": [
+            {
+                "paName": "Barkley Sound",
+                "selected": false
+            },
+            {
+                "paName": "Cape Scott",
+                "selected": false
+            },
+            {
+                "paName": "Carmanah",
+                "selected": false
+            },
+            {
+                "paName": "Clayoquot Sound",
+                "selected": false
+            },
+            {
+                "paName": "Goletas Channel",
+                "selected": false
+            },
+            {
+                "paName": "Gulf Islands",
+                "selected": false
+            },
+            {
+                "paName": "Hesquiaht",
+                "selected": false
+            },
+            {
+                "paName": "Island East",
+                "selected": false
+            },
+            {
+                "paName": "Juan De Fuca",
+                "selected": false
+            },
+            {
+                "paName": "Long Beach",
+                "selected": false
+            },
+            {
+                "paName": "Nootka",
+                "selected": false
+            },
+            {
+                "paName": "North Brooks",
+                "selected": false
+            },
+            {
+                "paName": "Nuchatlitz",
+                "selected": false
+            },
+            {
+                "paName": "Quatsino",
+                "selected": false
+            },
+            {
+                "paName": "South Brooks",
+                "selected": false
+            },
+            {
+                "paName": "Victoria",
+                "selected": false
+            }
+        ]
+    }
+]

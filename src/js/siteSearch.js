@@ -1,6 +1,6 @@
 
 
-function PaddlingRegionSearchBehavior(regions, layers, JsonQuery) {
+function PaddlingRegionSearchBehavior(regions, layers, JsonQuery, iframeUrl) {
 
 
 
@@ -11,6 +11,17 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery) {
     } catch ( e ) {}
 
     var iframe = document.getElementById('mapFrame');
+    if(!iframe){
+        //throw 'No iframe!';
+        var iframeContainer=document.getElementById('mapIframeContainer');
+        if(!iframeContainer){
+            throw 'No iframe, or container...';
+        }
+        iframe=iframeContainer.appendChild(new Element('iframe', {
+            src:iframeUrl,
+            style:"border: none; width: 100%; height: 550px;"
+        }));
+    }
 
     var selobj = document.getElementById('rgSelect');
     var rgImg = document.getElementById('regionImage');
@@ -19,6 +30,10 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery) {
     var paSubmit = document.getElementById('paSubmit');
     var paSubmitFooter = document.getElementById('paSubmitFooter');
     var exportOutput = document.getElementById('exportOutput');
+
+    var exportJson = document.getElementById('exportJson');
+    exportJson.value=JSON.stringify({"widget":"paddlingAreasTool"});
+    
     var form = document.getElementById('exportForm');
     var siteCount = document.getElementById('siteCount');
 
@@ -46,6 +61,7 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery) {
 
             } else {
                 exportOutput.value = out
+
                 if (currentSelectedSites < currentCountSites) {
                     siteList.value = JSON.stringify(getSiteCheckboxes().filter(function(cbx) {
                         return !!cbx.checked;
@@ -63,9 +79,9 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery) {
 
     function getSubmitButtons() {
         return Array.prototype.slice.call(paSubmit.childNodes, 0).filter(function(btn) {
-            return (btn.nodeName === 'A');
+            return (btn.nodeName === 'A'||btn.nodeName === 'BUTTON');
         }).concat(Array.prototype.slice.call(paSubmitFooter.childNodes, 0).filter(function(btn) {
-            return (btn.nodeName === 'A');
+            return (btn.nodeName === 'A'||btn.nodeName === 'BUTTON');
         }));
     }
     function getCheckboxes() {
@@ -555,7 +571,7 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery) {
 
     var getOutlets=function(){
 
-        return (mapFrame.Outlets||mapFrame.contentWindow.Outlets||false)
+        return (iframe.Outlets||iframe.contentWindow.Outlets||false)
 
     }
 
@@ -620,7 +636,7 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery) {
     if (getOutlets()) {
         attachIframeListener();
     } else {
-        mapFrame.addEvent('load', function() {
+        iframe.addEvent('load', function() {
 
             console.log('iframe laoded');
             attachIframeListener();

@@ -1,0 +1,14 @@
+{
+    "count_sites": {
+        "access": "public"
+    },
+     "list_sites": {
+        "access": "public"
+    },
+     "site_articles": {
+        "access": "public"
+    },
+    "export": {
+        "access": "public"
+    }
+}

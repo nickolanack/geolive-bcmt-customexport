@@ -12,7 +12,9 @@
 <script type="text/javascript"
 	src="<?php
 
-echo UrlFrom(dirname(dirname(__DIR__)) . DS . 'bower_components' . DS . 'js-simplekml' . DS . 'KmlReader.js');
+	echo UrlFrom('{plugins}/Maps/bower_components/js-simplekml/KmlReader.js')
+
+//UrlFrom(dirname(dirname(__DIR__)) . DS . 'bower_components' . DS . 'js-simplekml' . DS . 'KmlReader.js');
 
 ?>">
     </script>
@@ -44,7 +46,11 @@ echo UrlFrom(dirname(dirname(__DIR__)) . DS . 'bower_components' . DS . 'js-simp
 	height: 100%;
 }
 
+html{
+	height:100%;
+}
 body {
+	height:100%;
 	margin: 0;
 }
 
@@ -116,7 +122,7 @@ var map = new google.maps.Map(document.getElementById('map'), {
   });
 
 PaddlingRegionMapSearchBehavior(
-    <?php echo file_get_contents(dirname(__DIR__) . DS . 'regions.json'); ?>,
+    <?php echo json_encode(GeoliveHelper::GetCachedRegionsList(), JSON_PRETTY_PRINT); ?>,
     map,
     <?php echo json_encode(UrlFrom(dirname(__DIR__) . DS . 'paddlingareas.kml')); ?>
     );

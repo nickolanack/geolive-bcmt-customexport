@@ -1,0 +1,34 @@
+{
+	"variables":{
+		"SystemParametersPlugin_pluginPaths":[
+			"{core}\/..\/php-core-map\/Plugins"
+		],
+		"SystemParametersPlugin_widgetPaths":[
+			"{core}\/..\/php-core-map\/Widgets",
+			"{core}\/..\/geolive-bcmt-customexport\/Widgets"
+		],
+		"SystemParametersPlugin_modulePaths":[
+			"{core}\/..\/php-core-map\/Modules"
+		],
+		"UserInterfacePlugin_defaultRoute":{
+		    "view": "plugin",
+		    "plugin": "UserInterface",
+		    "pluginView": "widget",
+		    "widget": "testDashboard"
+		},
+		"SentryIOPlugin_enabled":false,
+		"PusherMessagesPlugin_channelPrefix":"dev.local."
+	},
+	"alias":{
+		"components\/com_geolive\/users_files":"https:\/\/www.bcmarinetrails.org\/components\/com_geolive\/users_files"
+	},
+	"db":"bcmt.db",
+	"db-prefix":"cabc_",
+	"disable-sample-data":"sample-data-bcmt-1518665928",
+	"disable-html-config":{
+		"websiteRoot":"/srv/www/vhosts/production/bcmarinetrails.s54.ok.ubc.ca/http",
+		"websiteAdminRoot":"/srv/www/vhosts/production/bcmarinetrails.s54.ok.ubc.ca/http"
+	},
+	"admin-pass-hash":""
+
+}

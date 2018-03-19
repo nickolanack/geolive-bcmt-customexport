@@ -15,18 +15,22 @@ $config = array_merge(array(
 	src="<?php echo UrlFrom(Core::AdminDir() . '/js/Ajax/AjaxControlQuery.js'); ?>"
 	type="text/javascript"></script>
 <link rel="stylesheet" href="<?php echo UrlFrom(dirname(__DIR__) . '/css/siteSearch.css'); ?>" type="text/css">
+
 <script src="<?php echo UrlFrom(dirname(__DIR__) . '/js/siteSearch.js'); ?>" type="text/javascript"></script>
 
 <script type="text/javascript">
-window.addEventListener("load", function(){
+window.addEventListener("load", 
+function(){
 	PaddlingRegionSearchBehavior(
  <?php echo json_encode($config['regions'], JSON_PRETTY_PRINT); ?>, <?php echo json_encode($config['layers'], JSON_PRETTY_PRINT); ?>, (new Class({
 	    Extends:AjaxControlQuery,
 	    initialize:function(task, json){
 	        var me=this;
-	        me.parent(<?php echo json_encode($config['url']); ?>, task, json);
+	        me.parent(<?php echo json_encode($config['url']); ?>, task, Object.append(json,{
+	        	"widget":"paddlingAreasTool"
+	        }));
 		}
- })));
+ 	})), window.location.href.split('?')[0]+'?show=map');
   });
 
 </script>
@@ -37,14 +41,15 @@ window.addEventListener("load", function(){
 
 
 
-<iframe id="mapFrame" class="map-view"
-	src="<?php echo UrlFrom(dirname(__DIR__) . DS . 'paddlingAreas.php'); ?>"
-	style="border: none; width: 100%; height: 550px;"></iframe>
+<div id="mapIframeContainer"></div>
+	<!--<iframe id="mapFrame" class="map-view"
+	src="<?php //echo UrlFrom(dirname(__DIR__) . DS . 'paddlingAreas.php'); ?>"
+	style="border: none; width: 100%; height: 550px;"></iframe>-->
 
 
-<form id="exportForm" name="bcmtForm" method="POST"
-	action="<?php echo $config['url'] ?>" target="_blank">
-	<input type="hidden" name="task" value="export" /> <input
+<form id="exportForm" action="<?php echo $config['url']; ?>" name="bcmtForm" method="POST"
+	target="_blank">
+	<input type="hidden" name="task" value="export" /> <input id="exportJson" type="hidden" name="json" value="{}" /><input
 		id="exportOutput" type="hidden" name="exportOutput" value="" /> <input
 		id="siteList" type="hidden" name="siteList" value="[]" />
 	<div id="formFrame" class="form-view"
@@ -89,12 +94,14 @@ echo implode(
 	</div>
 
 	<div id="paSubmit" style="">
-		<a id="" class="btn" data-out="preview" onclick="return false;"
-			disabled="true">Preview Sites</a><a id="exportToKml" class="btn"
+		<button type="button" id="" class="btn" data-out="preview" onclick="return false;"
+			disabled="true">Preview Sites</button>
+		<button type="button" id="exportToKml" class="btn"
 			data-out="kml" onclick="return false;" disabled="true">Download
-			results to Google Earth</a> <a id="exportToGpx" class="btn"
+			results to Google Earth</button>
+		<button type="button" id="exportToGpx" class="btn"
 			data-out="gpx" onclick="return false;" disabled="true">Download
-			results for your GPS</a> <span id="siteCount"></span>
+			results for your GPS</button> <span id="siteCount"></span>
 	</div>
 	<br />
 	<div id="sitePreviewHeader" style="visibility: hidden;">
@@ -103,23 +110,25 @@ echo implode(
 			not selected.</div>
 		<br />
 		<div>
-			<a id="selectAllSites" onclick="return false" class="btn btn-info">select
-				all</a><a id="removeAllSites" onclick="return false"
-				class="btn btn-info">remove all</a><a id="gridView" class="btn"
+			<button type="button" id="selectAllSites" onclick="return false" class="btn btn-info">select
+				all</button><button id="removeAllSites" onclick="return false"
+				class="btn btn-info">remove all</button>
+			<button type="button" id="gridView" class="btn"
 				style="padding: 4px 7px; float: right;"><img
-				src="/administrator/components/com_geolive/assets/Map%20Item%20Icons/xsm_table.png?tint=rgb(0, 68, 204)"></a><a
-				id="tableView" class="btn btn-primary active"
+				src="<?php echo UrlFrom('{assets}/Map Item Icons/xsm_table.png');?>?tint=rgb(0, 68, 204)"></button>
+			<button type="button" id="tableView" class="btn btn-primary active"
 				style="padding: 4px 8px; float: right;"><img
-				src="/administrator/components/com_geolive/assets/Map%20Item%20Icons/xsm_list.png?tint=rgb(255,255,255)"></a>
+				src="<?php echo UrlFrom('{assets}/Map Item Icons/xsm_list.png'); ?>?tint=rgb(255,255,255)"></button>
 		</div>
 	</div>
 	<!-- there are two views available table-view an grid-view, the css class name below sets the default view -->
 	<div id="site_preview" class="table-view"></div>
 	<br />
 	<div id="paSubmitFooter" style="visibility: hidden;">
-		<a class="btn btn-success" data-out="kml" onclick="return false;">Download
-			results to Google Earth</a> <a class="btn btn-success" data-out="gpx"
-			onclick="return false;">Download results for your GPS</a>
+		<button type="button" class="btn btn-success" data-out="kml" onclick="return false;">Download
+			results to Google Earth</button>
+		<button type="button" class="btn btn-success" data-out="gpx"
+			onclick="return false;">Download results for your GPS</button>
 	</div>
 	<br />
 

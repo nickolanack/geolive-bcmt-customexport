@@ -1,0 +1,23 @@
+[
+
+    {
+        "type": "input",
+        "name": "widgetTitle",
+        "default": "",
+        "label": "Label"
+    },
+
+    {
+        "type": "input",
+        "name": "target",
+        "default": "",
+        "label": "Target (Alias)"
+    },
+    {
+        "type": "input",
+        "name": "templateName",
+        "default": "paddlingAreasToolDetail",
+        "label": "Template name *"
+    }
+
+]

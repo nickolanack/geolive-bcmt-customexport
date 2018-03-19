@@ -40,7 +40,7 @@ try {
         // GeoliveHelper::LoadGeoliveFromCommandLine();
         // could run this script from command line. or could
         // implement asynrounous functions using shell_exec('php '.__FILE__.' ')
-    } elseif (GeoliveHelper::ScriptWasAccessedDirectlyFromUrl()) {
+    } elseif (UrlVar('task',false)!==false||GeoliveHelper::ScriptWasAccessedDirectlyFromUrl()) {
         
         if (UrlVar('task') == 'export') {
             
@@ -127,6 +127,7 @@ try {
                 }
             }
             
+            exit();
             return;
         }
         
@@ -171,43 +172,31 @@ try {
          * list number of results actively while user changes selection
          */
         echo 'Ajax Command List: [export]';
-    } elseif (GeoliveHelper::ScriptWasIncludedFromJoomla()) {
+    } else{//if (GeoliveHelper::ScriptWasIncludedFromJoomla()) {
         
         // display a dynamic form containing regions, and area selection.
         // TODO add layer selection.
         
-        if (!file_exists(__DIR__ . DS . 'regions.json')) {
-            
-            include_once ('lib/PaddlingArea.php');
-            include_once ('lib/Region.php');
-            
-            $regionObjArray = array();
-            
-            foreach (GeoliveHelper::DefinedRegionsList() as $region) {
-                
-                $regionObj = new Region($region);
-                
-                foreach (GeoliveHelper::DistinctPaddlineAreas($region) as $pdArea) {
-                    
-                    $paddleObj = new PaddlingArea($pdArea);
-                    $regionObj->areas[] = $paddleObj;
-                }
-                
-                $regionObjArray[] = $regionObj;
-                file_put_contents(__DIR__ . DS . 'regions.json', json_encode($regionObjArray, JSON_PRETTY_PRINT));
-            }
-        } else {
-            
-            $regionObjArray = json_decode(file_get_contents(__DIR__ . DS . 'regions.json'));
+
+        if (UrlVar('show') === 'map') {
+            //die('Map');
+            include __DIR__.'/paddlingAreas.php';
+            exit();
         }
+
+
         
+        $regionObjArray = GeoliveHelper::GetCachedRegionsList();
+            
+       
         if (empty($regionObjArray)) {
             throw new Exception('There were no regions');
         }
         
         // HtmlBock is used to seperate templates from code
         // look in scaffolds/html.form.select.php
-        
+        Behavior('mootools');
+        Behavior('ajax');
         HtmlBlock('form.select', 
             array(
                 'regions' => $regionObjArray,
@@ -218,7 +207,7 @@ try {
                             'name' => $layer->getName()
                         );
                     }, GeoliveHelper::VisibleLayers()),
-                'url' => UrlFrom(__FILE__)
+                'url' => Core::AjaxUrlRoot()//UrlFrom(__FILE__)
             ), // route the downloads/ajax directly to this file - outside of joomla.
 __DIR__ . DS . 'scaffolds');
         
@@ -229,9 +218,9 @@ __DIR__ . DS . 'scaffolds');
             ?><a href="<?php echo UrlFrom(__FILE__); ?>?task=unit_test">run
 	unit tests</a><?php
         }
-    } else {
+   // } else {
         
-        throw new Exception("Unrecognized Execution Environment");
+    //    throw new Exception("Unrecognized Execution Environment");
     }
 } catch (Exception $e) {
     die(print_r($e, true));

@@ -13,6 +13,11 @@ class GeoliveHelper
     public static function LoadCoreLibs()
     {
 
+        if(class_exists('Core')){
+            return;
+        }
+
+
         if (!self::$isLoaded) {
 
             $root = __DIR__;
@@ -114,6 +119,8 @@ class GeoliveHelper
     public static function VisibleLayers($accessGroups=null)
     {
 
+        GetPlugin('Maps');
+
         if(is_null($accessGroups)){
             $accessGroups=Core::Client()->getUsersAccessGroups();
         }
@@ -148,12 +155,13 @@ class GeoliveHelper
     public static function AttributeTable()
     {
 
-        return Core::LoadPlugin('Attributes')->getDatabase()->decodeTableName(AttributesTable::GetMetadata('siteData'));
+        return GetPlugin('Attributes')->getDatabase()->decodeTableName(AttributesTable::GetMetadata('siteData'));
     }
     private static $tableMetadata = null;
 
     public static function AttributeTableMetadata()
     {
+        GetPlugin('Attributes');
 
         if (is_null(self::$tableMetadata)) {
             self::$tableMetadata = AttributesTable::GetMetadata('siteData');
@@ -171,9 +179,48 @@ class GeoliveHelper
         return Core::LoadPlugin('Maps')->getDatabase();
     }
 
+    public static function GetCachedRegionsList(){
+        if (!file_exists(dirname(__DIR__) . DS . 'regions.json')) {
+ 
+            $regionObjArray = GeoliveHelper::GenerateRegionsList();
+            
+        } else {
+            
+            $regionObjArray = json_decode(file_get_contents(dirname(__DIR__) . DS . 'regions.json'));
+        }
+        return $regionObjArray;
+    }
+
+    public static function GenerateRegionsList(){
+
+            include_once (__DIR__.'/PaddlingArea.php');
+            include_once (__DIR__.'/Region.php');
+            
+            $regionObjArray = array();
+            
+            foreach (GeoliveHelper::DefinedRegionsList() as $region) {
+                
+                $regionObj = new Region($region);
+                
+                foreach (GeoliveHelper::DistinctPaddlineAreas($region) as $pdArea) {
+                    
+                    $paddleObj = new PaddlingArea($pdArea);
+                    $regionObj->areas[] = $paddleObj;
+                }
+                
+                $regionObjArray[] = $regionObj;
+                file_put_contents(dirname(__DIR__) . DS . 'regions.json', json_encode($regionObjArray, JSON_PRETTY_PRINT));
+            }
+
+            return $regionObjArray;
+
+
+    }
+
     public static function DefinedRegionsList()
     {
-
+        GetPlugin('Attributes');
+        
         $tableMetadata = AttributesTable::GetMetadata('siteData');
         $rgArray = array_map(function ($region) {
             return ucwords($region->section);
@@ -238,6 +285,8 @@ class GeoliveHelper
     public static function FilteredSiteListInAreas($areas, $iteratorCallback)
     {
 
+        GetPlugin('Attributes');
+
         $filter = json_decode(
             '{
                     "join":"join","table":"siteData","set":"*","filters":[' . implode(', ',
@@ -265,6 +314,8 @@ class GeoliveHelper
 
     public static function CountSitesInAreas($areas, $accessGroups=null)
     {
+
+        GetPlugin('Attributes');
 
         if(is_null($accessGroups)){
             $accessGroups=Core::Client()->getUsersAccessGroups();

@@ -23,7 +23,7 @@ class AjaxRequest {
                     'link' => 'itemprop="map"'
                 ),
                 'showStaticMap' => false
-            ), Core::Get('Maps')->getScaffoldsPath());
+            ), GetPlugin('Maps')->getScaffoldsPath());
         
         $article = ob_get_contents();
         ob_end_clean();
@@ -38,6 +38,8 @@ class AjaxRequest {
                 $layer = $l;
             }
         }
+
+        GetPlugin('Attributes');
         
         $data = AttributesRecord::Get($item->getId(), 'marker', GeoliveHelper::AttributeTableMetadata());
         
@@ -81,6 +83,8 @@ class AjaxRequest {
                 // 'query' => Core::GetDatasource()->getQuery(),
                 'success' => true
             ), JSON_PRETTY_PRINT);
+
+         exit();
     }
 
     public static function CountSites() {
@@ -100,9 +104,13 @@ class AjaxRequest {
                 // 'query' => Core::GetDatasource()->getQuery(),
                 'success' => true
             ), JSON_PRETTY_PRINT);
+
+        exit();
     }
 
     public static function ArticlesForSites() {
+
+        GetPlugin('Maps');
 
         $args = json_decode(UrlVar('json', '{}'));
         
@@ -136,5 +144,7 @@ class AjaxRequest {
                 // 'query' => Core::GetDatasource()->getQuery(),
                 'success' => true
             ), JSON_PRETTY_PRINT);
+
+         exit();
     }
 }

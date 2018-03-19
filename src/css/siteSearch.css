@@ -48,7 +48,7 @@ time>label, p.author>label {
 	display: none;
 }
 
-#site_preview article>a {
+#site_preview article .article-images {
 	position: relative;
 	width: 250px;
 	height: 131px;
@@ -128,7 +128,7 @@ form#exportForm .info {
 	display: none;
 }
 
-#site_preview.table-view article>a {
+#site_preview.table-view article .article-images {
 	display: none;
 }
 
