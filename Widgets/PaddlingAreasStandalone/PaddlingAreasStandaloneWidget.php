@@ -3,7 +3,7 @@
 /**
  * @package    Geolive
  * @subpackage Widgets
- * @license    GNU/GPL
+ * @license    MIT
  * @author	Nicholas Blackwell
  * @version	1.0
  *
@@ -25,7 +25,7 @@ class PaddlingAreasStandaloneWidget extends Widget implements core\AjaxControlle
         return "Paddling Areas Standalone Tool";
     }
 
-    protected function includeScripts($targetInstance = null) {
+    public function includeScripts($targetInstance = null) {
 
 
 

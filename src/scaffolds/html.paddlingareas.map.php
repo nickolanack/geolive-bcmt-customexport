@@ -26,15 +26,12 @@
 	href="https://s3-us-west-2.amazonaws.com/nickolanackbucket/popover/popover.css"
 	type="text/css" />
 <script
-	src="<?php echo UrlFrom(Core::AdminDir() . '/js/Controls/UIPopover.js'); ?>"
-	type="text/javascript"></script>
+	src="<?php echo UrlFrom('{scripts}/Controls/UIPopover.js'); ?>" type="text/javascript"></script>
 <script
-	src="<?php echo UrlFrom(Core::AdminDir() . '/js/Controls/UIMapPopover.js'); ?>"
-	type="text/javascript"></script>
-<script src="<?php echo UrlFrom(Core::AdminDir()); ?>/js/JSUtilities.js"
-	type="text/javascript"></script>
+	src="<?php echo UrlFrom('{scripts}/Controls/UIMapPopover.js'); ?>" type="text/javascript"></script>
+<script src="<?php echo UrlFrom('{scripts}/JSUtilities.js'); ?>" type="text/javascript"></script>
 <script
-	src="<?php echo UrlFrom(Core::AdminDir() . '/js/Ajax/AjaxControlQuery.js'); ?>"
+	src="<?php echo UrlFrom('{scripts}/Ajax/AjaxControlQuery.js'); ?>"
 	type="text/javascript"></script>
 
 <script

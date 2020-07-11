@@ -1,0 +1,876 @@
+{
+    "fields": [
+        {
+            "label": "id",
+            "key": "field_99",
+            "required": false,
+            "type": "number"
+        },
+        {
+            "label": "Icon",
+            "key": "field_514",
+            "required": false,
+            "type": "image"
+        },
+        {
+            "label": "type",
+            "key": "field_329",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "line",
+                "marker"
+            ]
+        },
+        {
+            "label": "item owner id",
+            "key": "field_330",
+            "required": false,
+            "type": "number"
+        },
+        {
+            "label": "item owner name",
+            "key": "field_331",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "First Choice",
+                "Fred Pishalski",
+                "Mick Allen",
+                "Nick Blackwell",
+                "Nick Heath",
+                "Paul Grey",
+                "Second Choice",
+                "Stephanie Meinke",
+                "Third Choice",
+                "geolive"
+            ]
+        },
+        {
+            "label": "item owner email",
+            "key": "field_332",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "First Choice",
+                "Second Choice",
+                "Third Choice",
+                "ezk@shaw.ca",
+                "gailmiller@shaw.ca",
+                "geolive",
+                "nheath@sfu.ca",
+                "nickblackwell82@gmail.com",
+                "sjmeinke@shaw.ca",
+                "yakalot@telus.net"
+            ]
+        },
+        {
+            "label": "layer id from Geolive",
+            "key": "field_333",
+            "required": false,
+            "type": "number"
+        },
+        {
+            "label": "layer title",
+            "key": "field_334",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Campsite",
+                "Day Use",
+                "Gulf Islands MT - 1",
+                "Gulf Islands MT - 2",
+                "Gulf Islands MT - 3",
+                "Launch Site",
+                "Other Site",
+                "Planning Layer",
+                "Private or Commercial",
+                "Salish Sea MT - leg 1",
+                "Salish Sea MT - leg 2",
+                "Salish Sea MT - leg 3",
+                "Salish Sea MT - leg 4",
+                "Sea to Sky",
+                "Sea to Sky MT",
+                "Unofficial Site",
+                "Safety Stop",
+                "Ferry Terminal"
+            ]
+        },
+        {
+            "label": "title",
+            "key": "field_100",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "coordinates",
+            "key": "field_101",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Description",
+            "key": "field_102",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Commercial",
+                "Commercial Campground",
+                "Community",
+                "Day Use",
+                "Deleted Site",
+                "Launch Site",
+                "Portage",
+                "Potential Campsite",
+                "Potential Day Use",
+                "Potential Launch Site",
+                "Potential Safety Stop",
+                "Primary Campsite",
+                "Primary Marine Trail Site",
+                "Safety Stop",
+                "Secondary Campsite",
+                "Secondary Marine Trail Site",
+                "Ferry Service"
+            ]
+        },
+        {
+            "label": "image count",
+            "key": "field_335",
+            "required": false,
+            "type": "number"
+        },
+        {
+            "label": "url",
+            "key": "field_336",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "created date",
+            "key": "field_103",
+            "required": false,
+            "type": "date_time"
+        },
+        {
+            "label": "last modification date",
+            "key": "field_104",
+            "required": false,
+            "type": "date_time"
+        },
+        {
+            "label": "read access",
+            "key": "field_105",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "public",
+                "special"
+            ]
+        },
+        {
+            "label": "Land Tenure",
+            "key": "field_106",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "BC Hydro Right of Way",
+                "Commercial reserve - Seasketch",
+                "Crown",
+                "Crown (Hanson Island Lease)",
+                "Crown - leased to Regional District",
+                "Crown - up to developed sites encroaching seawalk",
+                "Crown -possibly leased to Islands Trust Fund?",
+                "Crown Conservancy",
+                "Crown Foreshore Lease",
+                "Crown Lease",
+                "Crown Ownership of narrow upland strip (& foreshore) and most of East end",
+                "Crown Recreation Reserve",
+                "Crown Tenure Sec 16 Reserve - Recreation",
+                "Crown Tenure; likely for forestry",
+                "Crown UREP 931505",
+                "Crown for the 10 m wide access from road and a small strip of upland above the beach.",
+                "Crown foreshore",
+                "Crown lease",
+                "Crown leases",
+                "Crown or Provincial Park",
+                "Crown or Regional Park",
+                "Crown or railway managed",
+                "Crown or railway owned, managed",
+                "Crown provincial roadend",
+                "Crown road end Right of Way",
+                "Crown tenure",
+                "Crown tenure - Section 17 designated use area",
+                "Crown tenure - likely for quarry",
+                "Crown tenure -Sect 17 designated use area",
+                "Crown tenure -Section 17 designated use area",
+                "Crown, bay and mainland to N under tenure.",
+                "Crown, but creek is tenured - likely for an Independent run-of-river power project (RRP).",
+                "Crown, but tenure of occupation granted in this region, however also conservation and recreation, further checking required",
+                "Crown, oyster lease",
+                "Crown?",
+                "Daawuuxusda Conservancy",
+                "Daawuuxusda Conservancy or private",
+                "Duu Guusd Conservancy",
+                "Ecological Reserve",
+                "Ecological Reserve?",
+                "FN",
+                "First Nation",
+                "Government of Canada",
+                "IR",
+                "IR adjacent",
+                "IR or Crown Conservancy",
+                "IR or Private",
+                "IR?",
+                "Kamdis Conservancy",
+                "Kunxalas Conservancy",
+                "Kuuna Gwaay Conservancy",
+                "Marine Provincial Park",
+                "Ministry of Transportation & Highways",
+                "Ministry of Transportation & Infrastructure",
+                "Mixed",
+                "Municipal",
+                "Municipal beach access, public foreshore",
+                "Municipal or Crown",
+                "Municipal or regional",
+                "Municipal road end",
+                "Municipal, public beach",
+                "Municipal, public foreshore",
+                "Municipal, road end right of way",
+                "Municipal, road end right of way.",
+                "Municipal\/Public Harbour",
+                "Municipal\/Regional",
+                "Municipal\/regional",
+                "Nang Xaldangaas Conservancy",
+                "National Historic Site",
+                "National Park Reserve",
+                "Nature Trust of BC",
+                "Non profit society",
+                "Private",
+                "Private  - Leased from Island Timberlands?",
+                "Private (largest island)",
+                "Private (some indication may already be or change to Prov Park)",
+                "Private (some parts)",
+                "Private according to FrontCounterBC",
+                "Private as shown on Seasketch",
+                "Private or Crown lease",
+                "Private or Municipal",
+                "Private or Provincial Forest",
+                "Private ownership - FrontCounterBC",
+                "Private upland",
+                "Private upland, public foreshore",
+                "Private upland. Public foreshore only",
+                "Private with public access provision",
+                "Private, Crown water lease",
+                "Private, believed to be leased from Island Timberlands",
+                "Private?",
+                "Proposed BCMTN Recreation Site",
+                "Provincial Ecological Reserve",
+                "Provincial Forest",
+                "Provincial Forest - tenured",
+                "Provincial Forest borders on Recreation Site to N",
+                "Provincial Forest or IR",
+                "Provincial Forest or Private",
+                "Provincial Forest or Provincial Recreation Site",
+                "Provincial Forest or private - uncertain",
+                "Provincial Forest tenures",
+                "Provincial Forest, Crown Tenure",
+                "Provincial Forest, N end of island foreshore, channel under tenure.",
+                "Provincial Forest?",
+                "Provincial Forest? Private?",
+                "Provincial Park",
+                "Provincial Park along beach, private lots in upland",
+                "Provincial Park\/Public Harbour",
+                "Provincial Protected Area",
+                "Provincial Recreation Reserve",
+                "Provincial Recreation Site",
+                "Provincial Recreation Site or Reserve",
+                "Provincial Recreation Site?",
+                "Provincial road end",
+                "Provincial road end ROW",
+                "Public Beach or Public Dock",
+                "Public Foreshore",
+                "Public Foreshore, Crown land at creek, hill or islet to SE",
+                "Public Foreshore, Municipal",
+                "Public Foreshore, Municipal public access",
+                "Public Foreshore, Private upland",
+                "Public Foreshore, Road end Right of Way",
+                "Public Foreshore, Road end right of way",
+                "Public Foreshore, Road end right of way.",
+                "Public Foreshore, municipal",
+                "Public Foreshore, municipal beach access",
+                "Public Foreshore, road end Right of Way.",
+                "Public Foreshore, road end right of way",
+                "Public Foreshore. Road end right of way",
+                "Public Harbour",
+                "Public Harbour, First Nations",
+                "Public Harbour, IR",
+                "Public Harbour, upland IR",
+                "Public float",
+                "Public foreshore",
+                "Public foreshore, private upland",
+                "Public foreshore, private upland, Crown foreshore lease",
+                "Public foreshore, private upland?",
+                "Public foreshore, public access",
+                "Public harbour",
+                "Regional",
+                "Regional District of Nanaimo",
+                "Regional or Crown",
+                "Regional or municipal",
+                "Road end ROW",
+                "Road end Right of Way",
+                "Road end right of way",
+                "Road end right of way, public foreshore",
+                "Tenured",
+                "Treaty Settlement Land",
+                "Treaty Settlement Land designated for public access",
+                "UREP",
+                "UREP  Provincial Recreation Reserve",
+                "UREP - Texada PRRD OCP 2018 map",
+                "Unsure of tenure: General understanding is private, but many indications are that public access [and even camping] is allowed on perimeter strip. To be rechecked",
+                "Upland private, foreshore public",
+                "Upland private, foreshore public.",
+                "n\/a",
+                "private ownership",
+                "unknown",
+                "unknown likely in Provincial Park",
+                "unknown likely private",
+                "unknown or FN",
+                "unknown, IR",
+                "unknown, appears to be a road end ROW",
+                "unsure of tenure: General understanding is private, but islet is outside L.696 HWM boundary shown on lands plan. To be rechecked."
+            ]
+        },
+        {
+            "label": "Tent Sites",
+            "key": "field_107",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Landing Comments",
+            "key": "field_108",
+            "required": false,
+            "type": "paragraph_text"
+        },
+        {
+            "label": "Camp Comments",
+            "key": "field_109",
+            "required": false,
+            "type": "paragraph_text"
+        },
+        {
+            "label": "Other Comments",
+            "key": "field_110",
+            "required": false,
+            "type": "paragraph_text"
+        },
+        {
+            "label": "Site Condition Notes",
+            "key": "field_337",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "SC Report Date",
+            "key": "field_338",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Site Function",
+            "key": "field_339",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Commercial",
+                "Commercial campsite",
+                "Community",
+                "Deleted day use site",
+                "Deleted launch site",
+                "Deleted portage",
+                "Deleted potential campsite",
+                "Deleted secondary campsite",
+                "Deleted commercial site",
+                "Deleted primary campsite",
+                "First Choice",
+                "Launch site",
+                "Portage",
+                "Potential campsite",
+                "Potential day use site",
+                "Potential launch site",
+                "Potential safety stop",
+                "Primary campsite",
+                "Safety stop",
+                "Second Choice",
+                "Secondary campsite",
+                "Sponsor",
+                "Third Choice"
+            ]
+        },
+        {
+            "label": "Site Usage",
+            "key": "field_111",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Heavy",
+                "Light",
+                "Light except with local paddle club outing",
+                "Light or none",
+                "Moderate",
+                "None",
+                "Unknown",
+                "lot full of vehicles.",
+                "n\/a",
+                "none",
+                "possibly extremely limited or none",
+                "unknown"
+            ]
+        },
+        {
+            "label": "Rationale",
+            "key": "field_112",
+            "required": false,
+            "type": "paragraph_text"
+        },
+        {
+            "label": "Planning Action",
+            "key": "field_340",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Site Access",
+            "key": "field_113",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Coordinate Source",
+            "key": "field_114",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                " ",
+                "BC Parks",
+                "BCGNIS",
+                "Coastal Waters Recreation map",
+                "G Lewis",
+                "Google Earth",
+                "Google Earth NVI MAPP report mapping",
+                "IMAP",
+                "J Kimantas",
+                "J Lewis",
+                "JK",
+                "JK also NF",
+                "MAPP report",
+                "MapSource",
+                "Marine chart electronic",
+                "Marine chart paper",
+                "NVI MAPP mapping",
+                "NVI MAPP planning",
+                "RRL 2000",
+                "RRL 2003",
+                "Rec  GPS",
+                "Satellite Tracker",
+                "Seasketch",
+                "Toquaht Band map",
+                "unknown"
+            ]
+        },
+        {
+            "label": "Provenance",
+            "key": "field_341",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Signage & Structures",
+            "key": "field_115",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Region connection",
+            "key": "field_134",
+            "required": false,
+            "type": "connection",
+            "relationship": {
+                "belongs_to": "many",
+                "has": "one",
+                "object": "object_2"
+            }
+        },
+        {
+            "label": "Known Visit Detail",
+            "key": "field_116",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Site Visit Done",
+            "key": "field_117",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Site Visited By",
+            "key": "field_118",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Site Visit Date",
+            "key": "field_119",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Proposed Ground Check Date",
+            "key": "field_120",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Region",
+            "key": "field_121",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Central Coast",
+                "Discoveries & Mid Coast",
+                "Haida Gwaii",
+                "North Coast",
+                "South Coast Mainland",
+                "Vancouver Island"
+            ]
+        },
+        {
+            "label": "Paddling Area",
+            "key": "field_122",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Barkley Sound",
+                "Bella Bella",
+                "Bella Coola",
+                "Broughton Tribune",
+                "Burrard Inlet",
+                "Bute Inlet",
+                "Calvert Hakai",
+                "Cape Caution",
+                "Cape Scott",
+                "Carmanah",
+                "Chatham Sound",
+                "Clayoquot Sound",
+                "Cordero Channel",
+                "Desolation Toba",
+                "Discovery Islands",
+                "Dixon Entrance",
+                "Dixon entrance",
+                "Douglas Gardner",
+                "E Graham",
+                "E Moresby",
+                "Fitz Hugh Sound",
+                "Fraser Pitt",
+                "Gil Campania",
+                "Goletas Channel",
+                "Grenville",
+                "Gulf Islands",
+                "Hecate Strait",
+                "Hesquiaht",
+                "Howe Sound",
+                "Island East",
+                "Jervis Inlet",
+                "Johnstone Strait",
+                "Juan de Fuca",
+                "Klemtu",
+                "Knight Inlet",
+                "Kunghit",
+                "Laredo",
+                "Long Beach",
+                "Loughborough Inlet",
+                "Masset Sd",
+                "Milbanke Sound",
+                "N Graham",
+                "Nass Portland",
+                "Nootka",
+                "North Brooks",
+                "Nuchatlitz",
+                "Ocean Falls",
+                "Petrel Principe",
+                "Porcher",
+                "Princess Royal",
+                "Quatsino",
+                "Queen Charlotte Strait",
+                "Queens Sound",
+                "Sechelt Inlet",
+                "Seymour",
+                "Skidegate Channel",
+                "Smith Sound",
+                "South Brooks",
+                "Spiller Roscoe",
+                "Strait of Georgia North",
+                "Strait of Georgia South",
+                "Victoria",
+                "W Graham",
+                "W Moresby"
+            ]
+        },
+        {
+            "label": "Trail",
+            "key": "field_123",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Cape Scott Marine Trail",
+                "Gulf Islands Marine Trail",
+                "Salish Sea Marine Trail",
+                "Sea to Sky Marine Trail",
+                "Victoria Waterway Loop Trail"
+            ]
+        },
+        {
+            "label": "Additional Trails",
+            "key": "field_124",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Last Editor",
+            "key": "field_125",
+            "required": false,
+            "type": "connection",
+            "relationship": {
+                "belongs_to": "many",
+                "has": "one",
+                "object": "object_4"
+            }
+        },
+        {
+            "label": "Edit Count",
+            "key": "field_126",
+            "required": false,
+            "type": "number"
+        },
+        {
+            "label": "Portfolio",
+            "key": "field_128",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Gulf Islands",
+                "Howe Sound",
+                "Sunshine Coast",
+                "Desolation\/Discovery Islands",
+                "Broughton\/Johnstone",
+                "North Vancouver Island",
+                "Nootka-Kyuquot",
+                "Clayoquot",
+                "Barkley Sound",
+                "Juan de Fuca",
+                "Central Coast",
+                "North Coast"
+            ]
+        },
+        {
+            "label": "Projects",
+            "key": "field_343",
+            "required": false,
+            "type": "connection",
+            "relationship": {
+                "object": "object_21",
+                "has": "many",
+                "belongs_to": "many"
+            }
+        },
+        {
+            "label": "Status",
+            "key": "field_352",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Photo link",
+            "key": "field_369",
+            "required": false,
+            "type": "link"
+        },
+        {
+            "label": "Deleted\/Rejected",
+            "key": "field_398",
+            "required": false,
+            "type": "boolean"
+        },
+        {
+            "label": "Layer ID",
+            "key": "field_421",
+            "required": false,
+            "type": "number"
+        },
+        {
+            "label": "Last modification date (modified)",
+            "key": "field_516",
+            "required": false,
+            "type": "concatenation"
+        },
+        {
+            "label": "Edit summary",
+            "key": "field_523",
+            "required": false,
+            "type": "rich_text"
+        },
+        {
+            "label": "Reason for edit",
+            "key": "field_542",
+            "required": false,
+            "type": "paragraph_text"
+        },
+        {
+            "label": "Type of edit",
+            "key": "field_524",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Minor (spelling, grammar)",
+                "Minor (junior fields changed)",
+                "Significant (admin fields changed)",
+                "Significant (Geolive fields changed)",
+                "Significant (visibility status changed)",
+                "New site added"
+            ]
+        },
+        {
+            "label": "Info source for edit",
+            "key": "field_543",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "BCMT site visit",
+                "Correspondence",
+                "Official sources (contacts)",
+                "Online data\/reports",
+                "Other",
+                "Published data",
+                "Site Condition Report",
+                "Trail Evaluation Form"
+            ]
+        },
+        {
+            "label": "Site Assessment Priority",
+            "key": "field_544",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "To be determined",
+                "Low",
+                "Moderate",
+                "High",
+                "Urgent"
+            ]
+        },
+        {
+            "label": "Site Status",
+            "key": "field_545",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "To be determined",
+                "Reported",
+                "Assessed",
+                "Informal",
+                "Formal",
+                "Rejected"
+            ]
+        },
+        {
+            "label": "BCMT Site Objective",
+            "key": "field_546",
+            "required": false,
+            "type": "short_text"
+        },
+        {
+            "label": "Site Planning Statement",
+            "key": "field_547",
+            "required": false,
+            "type": "paragraph_text"
+        },
+        {
+            "label": "Site Planning Priority",
+            "key": "field_553",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "Low",
+                "Moderate",
+                "High",
+                "Targeted"
+            ]
+        },
+        {
+            "label": "Map URL",
+            "key": "field_629",
+            "required": false,
+            "type": "link"
+        },
+        {
+            "label": "URL Text Formula",
+            "key": "field_630",
+            "required": false,
+            "type": "concatenation"
+        },
+        {
+            "label": "Habitats",
+            "key": "field_768",
+            "required": false,
+            "type": "connection",
+            "relationship": {
+                "object": "object_43",
+                "has": "many",
+                "belongs_to": "many"
+            }
+        },
+        {
+            "label": "Biogeoclimatic Subzone",
+            "key": "field_699",
+            "required": false,
+            "type": "multiple_choice",
+            "choices": [
+                "CDFmm",
+                "CWHdm",
+                "CWHwh1",
+                "CWHwh3",
+                "CWHxm1",
+                "CWHxm2",
+                "CWHvh1",
+                "CWHvh2",
+                "CHWvm",
+                "CHWvm1",
+                "CHWvm2",
+                "CHWvm3"
+            ]
+        },
+        {
+            "label": "Endangered List",
+            "key": "field_700",
+            "required": false,
+            "type": "connection",
+            "relationship": {
+                "object": "object_39",
+                "has": "one",
+                "belongs_to": "many"
+            }
+        },
+        {
+            "label": "Regional Districts",
+            "key": "field_731",
+            "required": false,
+            "type": "connection",
+            "relationship": {
+                "belongs_to": "many",
+                "has": "many",
+                "object": "object_41"
+            }
+        }
+    ]
+}

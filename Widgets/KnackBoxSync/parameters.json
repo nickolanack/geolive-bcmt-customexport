@@ -1,0 +1,36 @@
+[
+
+	{
+		"type": "boolean",
+		"name": "enableSync",
+		"legend": "Enable sync function",
+		"default": true
+	},
+
+    {
+	    "type": "fieldset",
+	    "fields": [{
+	        "type": "inherit-widget-parameters",
+	        "target": "plugin.Maps.CustomTileControlScript"
+	    }]
+	},
+	{
+		"type": "json",
+		"name": "boxAuth",
+		"legend": "Box Authorization",
+		"default": {}
+	},
+	{
+		"type": "json",
+		"name": "knackAuth",
+		"legend": "Knack Authorization",
+		"default": {}
+	},
+	{
+		"type": "text",
+		"name": "boxWebhookSignatureSecret",
+		"legend": "Box Webhook Signature",
+		"default": {}
+	}
+
+]

@@ -12,7 +12,7 @@ $config = array_merge(array(
 
 ?>
 <script
-	src="<?php echo UrlFrom(Core::AdminDir() . '/js/Ajax/AjaxControlQuery.js'); ?>"
+	src="<?php echo UrlFrom('{scripts}/Ajax/AjaxControlQuery.js'); ?>"
 	type="text/javascript"></script>
 <link rel="stylesheet" href="<?php echo UrlFrom(dirname(__DIR__) . '/css/siteSearch.css'); ?>" type="text/css">
 

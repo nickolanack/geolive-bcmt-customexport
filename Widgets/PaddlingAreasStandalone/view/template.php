@@ -145,7 +145,7 @@ function(application, item, options){
 			    initialize:function(task, json){
 			        var me=this;
 			        me.parent(CoreAjaxUrlRoot, task, Object.append(json,{
-			        	"widget":"paddlingAreasToo"
+			        	"widget":"paddlingAreasToolDetail"
 			        }));
 				}
 		 	})), <?php  echo json_encode(GetPlugin("UserInterface")->urlForView("widget", array("widget"=>$this->getId(), "show"=>"map"))); ?>);

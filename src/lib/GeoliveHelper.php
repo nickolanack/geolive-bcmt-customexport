@@ -36,11 +36,11 @@ class GeoliveHelper
 
             include_once $core;
 
-            Core::Parameters()->disableCaching();
-            Core::Parameters()->disableCompression();
+            Params()->disableCaching();
+            Params()->disableCompression();
 
-            Core::LoadPlugin('Attributes');
-            Core::LoadPlugin('Maps');
+            GetPlugin('Attributes');
+            GetPlugin('Maps');
 
             self::$isLoaded = true;
         }
@@ -55,7 +55,7 @@ class GeoliveHelper
             }
         } else {
             self::$isUrl = true;
-            if (Core::HTML()->getScriptName() == basename($file) || Core::HTML()->getScriptName() == basename($map)) {
+            if (HtmlDocument()->getScriptName() == basename($file) || HtmlDocument()->getScriptName() == basename($map)) {
                 self::$isDirect = true;
             }
         }
@@ -105,13 +105,13 @@ class GeoliveHelper
         // these are all optional, but if not set, will likely cause fatal errors.
 
         if (key_exists('protocol', $cmd)) {
-            Core::HTML()->setProtocol($cmd['protocol']);
+            HtmlDocument()->setProtocol($cmd['protocol']);
         }
         if (key_exists('domain', $cmd)) {
-            Core::HTML()->setDomain($cmd['domain']);
+            HtmlDocument()->setDomain($cmd['domain']);
         }
         if (key_exists('scriptpath', $cmd)) {
-            Core::HTML()->setScriptPath($cmd['scriptpath']);
+            HtmlDocument()->setScriptPath($cmd['scriptpath']);
         }
     }
     private static $visibleLayers;
@@ -122,7 +122,7 @@ class GeoliveHelper
         GetPlugin('Maps');
 
         if(is_null($accessGroups)){
-            $accessGroups=Core::Client()->getUsersAccessGroups();
+            $accessGroups=GetClient()->getUsersAccessGroups();
         }
 
 
@@ -149,7 +149,7 @@ class GeoliveHelper
     public static function MapitemTable()
     {
 
-        return Core::LoadPlugin('Maps')->getDatabase()->table(MapsDatabase::$MAPITEM);
+        return GetPlugin('Maps')->getDatabase()->table(MapsDatabase::$MAPITEM);
     }
 
     public static function AttributeTable()
@@ -176,7 +176,7 @@ class GeoliveHelper
     public static function Database()
     {
 
-        return Core::LoadPlugin('Maps')->getDatabase();
+        return GetPlugin('Maps')->getDatabase();
     }
 
     public static function GetCachedRegionsList(){
@@ -303,7 +303,7 @@ class GeoliveHelper
         // print_r($filter);
 
         $query = 'Select m.id as id, m.name as name FROM ( SELECT * FROM ' . GeoliveHelper::MapitemTable() .
-        ' WHERE readAccess IN (\'' . implode('\', \'', Core::Client()->getUsersAccessGroups()) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
+        ' WHERE readAccess IN (\'' . implode('\', \'', GetClient()->getUsersAccessGroups()) . '\')) as m, ' . AttributesFilter::JoinAttributeFilterObject(
             $filter, 'm.id', 'm.type') . ' AND m.lid IN (' . implode(', ',
             array_map(function ($layer) {
                 return $layer->getId();
@@ -318,7 +318,7 @@ class GeoliveHelper
         GetPlugin('Attributes');
 
         if(is_null($accessGroups)){
-            $accessGroups=Core::Client()->getUsersAccessGroups();
+            $accessGroups=GetClient()->getUsersAccessGroups();
         }
 
         $filter = json_decode(
@@ -350,7 +350,7 @@ class GeoliveHelper
     {
 
         if(is_null($accessGroups)){
-            $accessGroups=Core::Client()->getUsersAccessGroups();
+            $accessGroups=GetClient()->getUsersAccessGroups();
         }
 
         $from = "FROM " . GeoliveHelper::AttributeTable() . " a inner join " . GeoliveHelper::MapitemTable() .
