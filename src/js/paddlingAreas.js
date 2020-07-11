@@ -9,7 +9,6 @@ function PaddlingRegionMapSearchBehavior(regionsData, map, kmlUrl) {
      * move functions and variables below into class PaddlingAreasSelection
      */
 
-
     var polysByArea = {};
     var areasByRegion = {};
     var regionsByArea = {};

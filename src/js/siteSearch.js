@@ -139,9 +139,11 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery, iframeUrl) {
                 var sitesWithoutHtml = [];
                 result.sites.forEach(function(site) {
 
+                    //site.attributes=site.attributes
+
                     if (site.html) {
                         if (i % drawHeader == 0) {
-                            displaySitePreviewHeaderElement(site);
+                            displaySitePreviewHeaderElement(site, {'siteFunction':"description"});
                         }
                         displaySitePreviewElement(site);
                         i++;
@@ -318,7 +320,7 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery, iframeUrl) {
         sitePreviewArea.appendChild(siteArticle);
 
         var attributesEl = new Element('ul');
-        Object.keys(site.attributes).forEach(function(name) {
+        sortAttributes(Object.keys(site.attributes)).forEach(function(name) {
             value = site.attributes[name];
             attributesEl.appendChild(new Element('li', {
                 html: value,
@@ -361,7 +363,19 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery, iframeUrl) {
         return siteArticle;
     }
 
-    function displaySitePreviewHeaderElement(site) {
+
+    function sortAttributes(attrs){
+
+        var i=attrs.indexOf('siteFunction');
+
+        attrs.splice(i,1);
+
+        return (['siteFunction']).concat(attrs);
+
+        //return attrs;
+    }
+
+    function displaySitePreviewHeaderElement(site, rename) {
 
         var siteArticle = new Element('div', {
             'class': 'tbl-hr'
@@ -372,9 +386,14 @@ function PaddlingRegionSearchBehavior(regions, layers, JsonQuery, iframeUrl) {
         sitePreviewArea.appendChild(siteArticle);
 
         var attributesEl = new Element('ul');
-        Object.keys(site.attributes).forEach(function(name) {
+        sortAttributes(Object.keys(site.attributes)).forEach(function(name) {
+            
+            var label=name;
+            if(rename[name]){
+                label=rename[name];
+            }
             attributesEl.appendChild(new Element('li', {
-                html: name.replace(/([A-Z])/g, ' $1').replace(/^./, function(str) {
+                html: label.replace(/([A-Z])/g, ' $1').replace(/^./, function(str) {
                     return str.toUpperCase();
                 }),
                 'data-field': name,

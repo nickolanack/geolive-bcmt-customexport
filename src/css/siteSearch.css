@@ -166,18 +166,21 @@ form#exportForm .info {
     width: 100px;
     text-align: left;
 }
-
+/*
 #site_preview.table-view li.atr-landingComments {
 	display: inline-block;
 	width: 333px;
 	text-align: left;
 }
+*/
 
-#site_preview.table-view li.atr-campComments {
+#site_preview.table-view li.atr-landingComments, #site_preview.table-view li.atr-campComments, #site_preview.table-view li.atr-otherComments {
 	display: inline-block;
-	width: 333px;
+	width: 222px;
 	text-align: left;
 }
+
+
 
 #site_preview.table-view li.atr-coordinates {
 	display: inline-block;
