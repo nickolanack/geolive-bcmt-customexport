@@ -126,10 +126,9 @@ PaddlingRegionMapSearchBehavior(
 
 }
 
-
    </script>
 	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnTJCsJO2piovlyQfpmemfQXVjwkdB7R4&callback=initMap"></script>
+		src="https://maps.googleapis.com/maps/api/js?key=<?php echo file_get_contents(dirname(__DIR__)."/apiKey.txt");?>&callback=initMap"></script>
 </body>
 
 </html>

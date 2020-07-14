@@ -17,7 +17,8 @@ class Sync {
 	protected $handlers = array();
 	protected $countPhotoUrlUpdates = 0;
 
-	protected $knackIdFilter = null;
+	protected $knackIdFilter = null; //deprecated. not used
+	protected $knackRecordFilter = null;
 
 	public function addEventHandler($handler) {
 		$this->handlers[] = $handler;
@@ -83,13 +84,31 @@ class Sync {
 
 	protected function iterateKnackItems($callback, $name, $longTaskProgress = null) {
 
+
+
+		if($this->knackRecordFilter){
+			if(!($this->knackRecordFilter instanceof \Closure)){
+				throw new \Exception('expected closure');
+			}
+		}
+
+
 		if (!$longTaskProgress) {
+
 
 			$this->knack->iterateRecords('mapitems', function ($record, $i) use (&$callback) {
 
-				if($record->title=="Fearney Point northwest"){
-					print_r($record);
+				if($this->knackRecordFilter){
+					$knackRecordFilter=$this->knackRecordFilter;
+					if(!$knackRecordFilter($record)){
+						return;
+					}
 				}
+
+
+				// if($record->title=="Fearney Point northwest"){
+				// 	print_r($record);
+				// }
 
 				if ($record->type !== "marker") {
 
@@ -112,6 +131,16 @@ class Sync {
 
 		$list = array();
 		$this->knack->iterateRecords('mapitems', function ($record, $i) use (&$list) {
+
+
+			if($this->knackRecordFilter){
+				$knackRecordFilter=$this->knackRecordFilter;
+				if(!$knackRecordFilter($record)){
+					return;
+				}
+			}
+
+
 			if ($record->type !== "marker") {
 
 				if (!in_array($record->type, array('line', 'polygon'))) {
@@ -262,6 +291,10 @@ class Sync {
 
 	}
 
+
+	/**
+	 * deprecated not used
+	 */
 	public function withKnackIdFilter($filter) {
 
 		$this->knackIdFilter = $filter;
@@ -269,6 +302,9 @@ class Sync {
 		return $this;
 	}
 
+	/**
+	 * deprecated not used
+	 */
 	protected function inFilter($id) {
 
 		$filter = $this->knackIdFilter;
@@ -282,18 +318,51 @@ class Sync {
 		return false;
 	}
 
+
+	public function withKnackFilter($filter, $cb) {
+
+		$this->knackRecordFilter = $filter;
+
+		if($cb){
+			if(!($cb instanceof \Closure)){
+				throw new \Exception("expect closure");
+			}
+			$cb();
+			$this->knackRecordFilter=null;
+		
+		}
+
+		return $this;
+	}
+
+
+	public function syncBoxFolderWithMarker($marker, $longTaskProgress){
+
+		$this->withKnackFilter(function($record)use($marker){
+			if($record->id==$marker){
+				return true;
+			}
+			return false;
+		}, function()use($longTaskProgress){
+
+			$this->syncAllBoxFolders($longTaskProgress);			
+
+		});
+
+		return $this;
+
+	}
+
 	public function syncAllBoxFolders($longTaskProgress = null) {
 
 		$this->iterateKnackItems(function ($record, $i) {
 
-			// if($record->id!=7461){
-			// 	return;
-			// }
+			
 
 			if (!(is_object($record->{'Photo link'}) && key_exists('url', $record->{'Photo link'}))) {
 				//print_r($record);
 				//throw new \Exception("Missing box photo-url");
-				//
+				
 				$this->triggerEvent('recordError', array(
 					'message' => 'Missing box photo-url (`' . $record->type . '`) and will be ignored',
 					'record' => $record,

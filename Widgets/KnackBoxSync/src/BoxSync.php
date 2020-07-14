@@ -21,26 +21,43 @@ class BoxSync {
 	public function syncFolder($id, $folder, $feature) {
 
 		$boxItems = $this->box->listItems($id, array('name', 'tags', 'sha1'));
+
+		$boxItems=array_values(array_filter($boxItems, function($item){
+
+			$ext=explode('.',$item->name);
+			$ext=strtolower(array_pop($ext));
+			if(!in_array($ext, array('jpg', 'png'))){
+				return false;
+			}
+
+			if($ext!='jpg'){
+				error_log('Non jpg: '.$item->name);
+			}
+
+			return true;
+
+		}));
+
 		$mapSha1s = $this->getFeatureSha1s($feature);
 		$allBoxSha1s =$this->getBoxSha1s($boxItems);
 		$boxSha1s = $this->getTaggedBoxSha1s($boxItems);	
 
 
-		//echo json_encode($boxSha1s)."\n";
-		//echo json_encode($mapSha1s)."\n";
+		error_log(print_r($boxItems, true));
+
+		// echo json_encode($boxSha1s)."\n";
+		// echo json_encode($mapSha1s)."\n";
 
 		if (json_encode($mapSha1s) !== json_encode($boxSha1s)) {
 
-			
 			$existingImages = $this->getExistingImages($feature, $boxSha1s, $mapSha1s);
 			
-
 			$boxUrl = 'https://bcmarinetrailsnetworkassoc.app.box.com/folder/' . $id;
 			
-			//error_log( $boxUrl);
-			//error_log( 'map: ' . print_r($mapSha1s, true) . "\n");
-			//error_log( 'box: ' . print_r($boxSha1s, true) . "\n");
-			//error_log( $id . print_r($boxItems, true) . "\n");
+			// error_log( $boxUrl);
+			// error_log( 'map: ' . print_r($mapSha1s, true) . "\n");
+			// error_log( 'box: ' . print_r($boxSha1s, true) . "\n");
+			// error_log( $id . print_r($boxItems, true) . "\n");
 
 			$existingImages = array_intersect_key($existingImages, array_combine($boxSha1s, $boxSha1s));
 

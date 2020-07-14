@@ -138,13 +138,12 @@ ini_set('display_errors', 1);
 
                 /////////$sync->syncBoxChanges($longTaskProgress);
                 $sync->syncAllBoxFolders($longTaskProgress);
-                
-                
+                //$sync->syncBoxFolderWithMarker(14165, $longTaskProgress);
             }
 
         ));
         
-        
+        $sync->triggerEvent('syncComplete',array());
         
          Broadcast('knack-sync', 'state', array(
                 "running"=>false

@@ -56,14 +56,23 @@ class LocalClient{
 	}
 
 	public function uploadImage($file, $name){
+
+		$suported = array('jpg', 'png');
+		$ext=explode('.', $name);
+		$ext=strtolower(array_pop($name));
+
+		if(!in_array($ext,$suported)){
+			throw new \Exception("only supports ".json_encode($suported).": ".$ext);
+		}
+
 		$fileData = array(
 				'number' => 1,
 				'totalSize' => filesize($file),
 				'files' => array(
 					array(
-						'ext' => 'jpg',
+						'ext' => $ext,
 						'name' => $name,
-						'type' => 'image/jpg',
+						'type' => 'image/'.$ext,
 						'tmp_name' => $file,
 						'error' => 0,
 					),
